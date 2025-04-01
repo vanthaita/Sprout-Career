@@ -2,30 +2,7 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
-// const Button = ({ variant, className, children, ...props }) => (
-//   <button
-//     className={`inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-//       variant === 'ghost'
-//         ? 'hover:bg-accent hover:text-accent-foreground'
-//         : 'bg-primary text-primary-foreground hover:bg-primary/90'
-//     } ${className}`}
-//     {...props}
-//   >
-//     {children}
-//   </button>
-// );
-
-// const Card = ({ className, children, ...props }) => (
-//   <div
-//     className={`rounded-lg border bg-card text-card-foreground shadow-sm ${className}`}
-//     {...props}
-//   >
-//     <div className="p-4">
-//        {children}
-//     </div>
-//   </div>
-// );
-
+import { Sprout, Leaf } from 'lucide-react';
 
 const TopJobSection = () => {
   const mockDataJobs = [
@@ -69,86 +46,94 @@ const TopJobSection = () => {
   ];
 
   return (
-    <section className='flex justify-center items-start pb-12 px-4'>
-      <div className='flex flex-col items-center justify-center gap-y-4 md:gap-y-6 w-full max-w-5xl'>
-        <div className='flex flex-wrap justify-center gap-2 w-full'>
-          <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-            <span role="img" aria-label="Japan flag" className='mr-1.5'>🇯🇵</span> No Japanese Required
-          </Button>
-          <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-            <span role="img" aria-label="airplane" className='mr-1.5'>✈️</span> Apply from Overseas
-          </Button>
-          <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-             <span role="img" aria-label="house" className='mr-1.5'>🏠</span> Remote Jobs
-          </Button>
-          <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-             <span role="img" aria-label="magnifying glass" className='mr-1.5'>🔍</span> All Jobs
-          </Button>
-        </div>
+    <section className='px-4'>
+      <div className=''>
+        <div className='flex flex-col items-center gap-y-6'>
+          <div className='text-center mb-8'>
+            <div className='inline-flex items-center gap-3 mb-4'>
+              <Sprout className='h-8 w-8 text-[#3A6B4C]' />
+              <h2 className='text-3xl font-serif font-bold text-[#2B463C]'>
+                Cultivate Your Career
+              </h2>
+            </div>
+            <p className='text-[#554640]/90'>
+              Latest Opportunities · Updated {new Date().toISOString().split('T')[0]}
+            </p>
+          </div>
 
-        <div className='text-center mt-4'>
-          <p className='text-sm text-gray-600'>Latest Developer Jobs・Updated 2025-04-01</p>
-        </div>
+          <div className='flex flex-wrap justify-center gap-3 w-full max-w-2xl'>
+            <Button 
+              variant='outline' 
+              className='h-9 rounded-full border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#f0ebe3]'
+            >
+              <span className='mr-1.5'>🇯🇵</span> No Japanese Required
+            </Button>
+            <Button 
+              variant='outline' 
+              className='h-9 rounded-full border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#f0ebe3]'
+            >
+              <span className='mr-1.5'>✈️</span> Apply from Overseas
+            </Button>
+            <Button 
+              variant='outline' 
+              className='h-9 rounded-full border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#f0ebe3]'
+            >
+              <span className='mr-1.5'>🏠</span> Remote Options
+            </Button>
+          </div>
 
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4'>
-          {mockDataJobs.map((job) => (
-            <Card key={job.id} className="hover:shadow-md transition-shadow duration-200 cursor-pointer p-4">
-              <div className="flex items-start space-x-4">
-                 <div className="flex-shrink-0 pt-1">
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-6'>
+            {mockDataJobs.map((job) => (
+              <Card 
+                key={job.id} 
+                className="group transition-all duration-200 cursor-pointer p-6"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
                     <img
                       src={job.logoUrl}
                       alt={`${job.company} logo`}
-                      className="w-14 h-14 object-contain rounded-md border p-0.5" 
+                      className="w-14 h-14 object-contain rounded-lg p-1" 
                     />
-                 </div>
-                 <div className="flex-grow min-w-0">
-                    <div className="text-sm text-gray-500 mb-1">
-                      <span>{job.company}</span>
-                      <span className="mx-1">·</span>
+                  </div>
+                  <div className="flex-grow min-w-0">
+                    <div className="text-sm text-[#554640]/80 mb-1.5">
+                      <span className="font-medium">{job.company}</span>
+                      <span className="mx-2">·</span>
                       <span>{job.location}</span>
                     </div>
 
-                    <div className="relative mb-2">
-                      <h3 className="text-base font-semibold text-gray-900 leading-tight mt-1 hover:text-primary">
-                         {job.title}
-                      </h3>
-                    </div>
+                    <h3 className="text-lg font-serif font-semibold text-[#2B463C] mb-2.5 group-hover:text-[#3A6B4C] transition-colors">
+                      {job.title}
+                    </h3>
 
-                    <div className="flex flex-wrap gap-1.5 items-center">
+                    <div className="flex flex-wrap gap-2 items-center">
                       {job.tags.map((tag, index) => (
-                        <div
+                        <span
                           key={index}
-                          variant={'ghost'}
-                          className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${
+                          className={`px-3 py-1 rounded-full text-sm ${
                             tag.includes("Required") || tag.includes("Only")
-                              ? 'border-primary border text-primary' 
+                              ? 'bg-[#3A6B4C]/10 text-[#3A6B4C] border border-[#3A6B4C]/20'
                               : ''
-                           }`} 
+                          }`}
                         >
                           {tag.startsWith('🇯🇵') ? <span className='mr-1'>{tag.substring(0, tag.indexOf(' '))}</span> : null}
                           {tag.startsWith('🇯🇵') ? tag.substring(tag.indexOf(' ') + 1) : tag}
-                        </div>
+                        </span>
                       ))}
                     </div>
-                 </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-        <div>
-          <Button className="text-sm px-6 py-2.5 text-white bg-primary hover:bg-primary/90 rounded-full">
-            Search dev Jobs
-          </Button>
-        </div>
-        <div className='flex flex-wrap justify-center gap-2 w-full mt-4'>
-          <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-            <span role="img" aria-label="Japan flag" className='mr-1.5'>🇯🇵</span> No Japanese Required
-          </Button>
-          <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-            <span role="img" aria-label="airplane" className='mr-1.5'>✈️</span> Apply from Overseas
-          </Button>
-          <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-             <span role="img" aria-label="house" className='mr-1.5'>🏠</span> Remote Jobs
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <Button 
+            size="lg"
+            className="mt-8 bg-[#3A6B4C] hover:bg-[#2E5540] text-white rounded-full px-8 py-6"
+          >
+            <Leaf className="mr-2 h-5 w-5" />
+            Explore All Opportunities
           </Button>
         </div>
       </div>

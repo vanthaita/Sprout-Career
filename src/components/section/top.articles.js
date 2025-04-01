@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import {
-  Card,
-  CardContent,
-} from '@/components/ui/card'; 
+import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
+import { Sprout, ArrowRight } from 'lucide-react';
+
 const mockArticleData = [
   {
     title: 'Moving to Japan as a Software Developer: An Opinionated FAQ',
@@ -57,42 +56,54 @@ const mockArticleData = [
 
 const TopArticlesSection = () => {
   return (
-    <section className="py-12 px-4">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Top Articles for Software Developers in Japan
-        </h2>
-        <p className="text-lg text-gray-600 mb-8 md:mb-12">
-          Check out our blog for insights on{' '}
-          <span className="font-semibold">living in Japan as a foreign software engineer</span> or tech professional
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+    <section className="py-16 px-4">
+      <div className="">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <Sprout className="h-9 w-9 text-[#3A6B4C]" strokeWidth={1.5} />
+            <h2 className="text-4xl font-serif font-bold text-[#2B463C]">
+              Cultivate Your Japan Knowledge
+            </h2>
+          </div>
+          <p className="text-lg text-[#554640]/90 max-w-2xl mx-auto">
+            Essential guides for growing your tech career in Japan
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {mockArticleData.map((article) => (
             <Link
               key={article.title}
               href={article.url}
-              className="block group" 
+              className="group block focus:outline-none focus:ring-2 focus:ring-[#3A6B4C] focus:ring-offset-2 rounded-2xl transition-all"
             >
-              <Card className="overflow-hidden h-full flex flex-col border-none bg-transparent shadow-none">
-                <div className="w-full h-56 overflow-hidden"> 
+              <Card className="overflow-hidden h-full flex flex-col border-none bg-transparent shadow-none z-20">
+                <div className="relative h-56 overflow-hidden">
                   <img
                     src={article.imageUrl}
                     alt={article.altText}
-                    className="w-full h-full object-cover rounded-2xl" 
+                    className="w-full h-full object-cover rounded-md"
                   />
                 </div>
-                <CardContent className="p-4 flex-grow"> 
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-primary transition-colors">
+
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-serif font-semibold text-[#2B463C] mb-3 group-hover:text-[#3A6B4C] transition-colors">
                     {article.title}
                   </h3>
-                  <p className="text-sm text-gray-600 line-clamp-3"> 
+                  <p className="text-[#554640]/90 text-sm leading-relaxed mb-4 line-clamp-3">
                     {article.description}
                   </p>
+                  <div className="flex items-center text-[#3A6B4C] font-medium">
+                    <span className="mr-2">Read More</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </div>
                 </CardContent>
               </Card>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Sprout className="mx-auto h-12 w-12 text-[#3A6B4C]/30" />
         </div>
       </div>
     </section>

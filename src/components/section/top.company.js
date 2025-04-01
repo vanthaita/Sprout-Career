@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
+import { Sprout, Leaf } from 'lucide-react';
 
 const mockCompanyData = [
   {
@@ -60,63 +61,77 @@ const mockCompanyData = [
   },
 ];
 
+
 const TopCompanySection = () => {
   return (
-    <section className="py-12 px-4">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Top Companies for Software Developers in Japan
-        </h2>
-        <p className="text-lg text-gray-600 mb-8 md:mb-12">
-          Explore hand-picked <span className="font-semibold">modern tech companies in Japan</span> looking for English-speaking software engineers
-        </p>
+    <section className="py-16 px-4">
+      <div className="">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <Sprout className="h-9 w-9 text-[#3A6B4C]" strokeWidth={1.5} />
+            <h2 className="text-4xl font-serif font-bold text-[#2B463C]">
+              Cultivate with Leading Tech Companies
+            </h2>
+          </div>
+          <p className="text-lg text-[#554640]/90 max-w-2xl mx-auto">
+            Discover Japan&apos;s most developer-friendly workplaces curated by Sprout
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {mockCompanyData.map((company) => (
             <Card
               key={company.name}
-              className=" shadow-md p-6 flex flex-col justify-between transition-shadow hover:shadow-lg"
+              className="group p-6  hover:border-[#3A6B4C] transition-all hover:shadow-lg"
             >
-              <div>
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">{company.name}</h3>
-                    <p className="text-sm text-gray-500">{company.location}</p>
-                  </div>
-                  <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center border rounded-md overflow-hidden ml-4">
+              <div className="flex flex-col h-full">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-16 h-16 flex-shrink-0 bg-white rounded-lg border-2 border-[#e4d9c8] p-1.5">
                     <img
                       src={company.logoUrl}
                       alt={`${company.name} logo`}
-                      className="max-w-full max-h-full object-contain"
+                      className="w-full h-full object-contain"
                     />
                   </div>
+                  <div className="flex-grow">
+                    <h3 className="text-xl font-serif font-semibold text-[#2B463C] group-hover:text-[#3A6B4C] transition-colors">
+                      {company.name}
+                    </h3>
+                    <p className="text-sm text-[#554640]/80">{company.location}</p>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-700 mb-4">
+
+                <p className="text-[#554640]/90 mb-6 flex-grow text-sm leading-relaxed">
                   {company.description}
                 </p>
-              </div>
 
-              <div className="mt-auto pt-4"> 
                 <Button
                   href={company.url}
-                  className="block w-full text-center py-2 px-4 border font-medium rounded-full  transition-colors duration-200"
+                  className="mt-auto w-full bg-[#3A6B4C] hover:bg-[#2E5540] text-white rounded-lg py-3"
                 >
-                  View {company.jobCount} job{company.jobCount !== 1 ? 's' : ''}
+                  <Leaf className="mr-2 h-4 w-4" />
+                  View {company.jobCount} Position{company.jobCount !== 1 ? 's' : ''}
                 </Button>
               </div>
             </Card>
           ))}
         </div>
-         <div className='flex flex-wrap justify-center gap-2 w-full mt-8'>
-            <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-            <span role="img" aria-label="Japan flag" className='mr-1.5'>🇯🇵</span> No Japanese Required
+
+        <div className="flex flex-wrap justify-center gap-3 mt-10">
+          {[
+            { icon: '🇯🇵', label: 'No Japanese Required' },
+            { icon: '✈️', label: 'Apply from Overseas' },
+            { icon: '🏠', label: 'Remote Options' }
+          ].map((filter, index) => (
+            <Button
+              key={index}
+              variant="outline"
+              className="h-10 rounded-full border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#f0ebe3] px-5"
+            >
+              <span className="mr-2">{filter.icon}</span>
+              {filter.label}
             </Button>
-            <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-            <span role="img" aria-label="airplane" className='mr-1.5'>✈️</span> Apply from Overseas
-            </Button>
-            <Button variant='ghost' className='border text-sm px-3 py-1 h-auto'>
-                <span role="img" aria-label="house" className='mr-1.5'>🏠</span> Remote Jobs
-            </Button>
+          ))}
         </div>
       </div>
     </section>
