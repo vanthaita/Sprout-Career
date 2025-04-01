@@ -1,9 +1,23 @@
-import Image from "next/image";
+import AboutSection from "@/components/section/about";
+import Footer from "@/components/section/footer";
+import HeroSection from "@/components/section/hero";
+import MeetTheTeamSection from "@/components/section/meet.the.team";
+import PostJobSection from "@/components/section/post.job";
+import TopArticlesSection from "@/components/section/top.articles";
+import TopCompanySection from "@/components/section/top.company";
+import TopJobSection from "@/components/section/top.job";
+
 
 export default function Home() {
   return (
-    <div className="">
-      <h1>Hello world</h1>
-    </div>
+    <>
+      <HeroSection />
+      <TopJobSection />
+      <TopCompanySection />
+      <TopArticlesSection />
+      <MeetTheTeamSection />
+      <AboutSection />
+      <PostJobSection />
+    </>
   );
 }
