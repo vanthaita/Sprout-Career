@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 import { Sprout, ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/hook/useLanguage ';
 
 const mockArticleData = [
   {
@@ -55,6 +56,7 @@ const mockArticleData = [
 ];
 
 const TopArticlesSection = () => {
+  const { t } = useLanguage("articles")
   return (
     <section className="py-16 px-4">
       <div className="">
@@ -62,11 +64,11 @@ const TopArticlesSection = () => {
           <div className="inline-flex items-center gap-3 mb-4">
             <Sprout className="h-9 w-9 text-[#3A6B4C]" strokeWidth={1.5} />
             <h2 className="text-4xl font-serif font-bold text-[#2B463C]">
-              Cultivate Your Japan Knowledge
+              {t("title")}
             </h2>
           </div>
           <p className="text-lg text-[#554640]/90 max-w-2xl mx-auto">
-            Essential guides for growing your tech career in Japan
+            {t("subtitle")}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -93,7 +95,7 @@ const TopArticlesSection = () => {
                     {article.description}
                   </p>
                   <div className="flex items-center text-[#3A6B4C] font-medium">
-                    <span className="mr-2">Read More</span>
+                    <span className="mr-2">{t("readMore")}</span>
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </CardContent>

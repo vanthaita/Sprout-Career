@@ -1,9 +1,10 @@
-/** @type {import('next').NextConfig} */
+import createNextIntlPlugin from 'next-intl/plugin';
 const nextConfig = {
     reactStrictMode: true,
     images: {
         domains: ["images.unsplash.com", "japan-dev.com"],
     },
 };
-
-export default nextConfig;
+ 
+const withNextIntl = createNextIntlPlugin();
+export default withNextIntl(nextConfig);

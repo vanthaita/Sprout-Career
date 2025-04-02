@@ -3,6 +3,7 @@ import React from 'react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { Sprout, Leaf } from 'lucide-react';
+import { useLanguage } from '@/hook/useLanguage ';
 
 const mockCompanyData = [
   {
@@ -63,6 +64,8 @@ const mockCompanyData = [
 
 
 const TopCompanySection = () => {
+  const { t } = useLanguage("companies");
+
   return (
     <section className="py-16 px-4">
       <div className="">
@@ -70,11 +73,11 @@ const TopCompanySection = () => {
           <div className="inline-flex items-center gap-3 mb-4">
             <Sprout className="h-9 w-9 text-[#3A6B4C]" strokeWidth={1.5} />
             <h2 className="text-4xl font-serif font-bold text-[#2B463C]">
-              Cultivate with Leading Tech Companies
+              {t("title")}
             </h2>
           </div>
           <p className="text-lg text-[#554640]/90 max-w-2xl mx-auto">
-            Discover Japan&apos;s most developer-friendly workplaces curated by Sprout
+            {t("subtitle")}
           </p>
         </div>
 
@@ -82,7 +85,7 @@ const TopCompanySection = () => {
           {mockCompanyData.map((company) => (
             <Card
               key={company.name}
-              className="group p-6  hover:border-[#3A6B4C] transition-all hover:shadow-lg"
+              className="group p-6 hover:border-[#3A6B4C] transition-all hover:shadow-lg"
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-start gap-4 mb-4">
@@ -97,7 +100,9 @@ const TopCompanySection = () => {
                     <h3 className="text-xl font-serif font-semibold text-[#2B463C] group-hover:text-[#3A6B4C] transition-colors">
                       {company.name}
                     </h3>
-                    <p className="text-sm text-[#554640]/80">{company.location}</p>
+                    <p className="text-sm text-[#554640]/80">
+                      {company.location}
+                    </p>
                   </div>
                 </div>
 
@@ -110,7 +115,10 @@ const TopCompanySection = () => {
                   className="mt-auto w-full bg-[#3A6B4C] hover:bg-[#2E5540] text-white rounded-lg py-3"
                 >
                   <Leaf className="mr-2 h-4 w-4" />
-                  View {company.jobCount} Position{company.jobCount !== 1 ? 's' : ''}
+                  {t("viewPositions", {
+                    count: company.jobCount,
+                    s: company.jobCount !== 1 ? 's' : ''
+                  })}
                 </Button>
               </div>
             </Card>
@@ -119,17 +127,16 @@ const TopCompanySection = () => {
 
         <div className="flex flex-wrap justify-center gap-3 mt-10">
           {[
-            { icon: '🇯🇵', label: 'No Japanese Required' },
-            { icon: '✈️', label: 'Apply from Overseas' },
-            { icon: '🏠', label: 'Remote Options' }
+            t("filters.noJapanese"),
+            t("filters.applyOverseas"),
+            t("filters.remoteOptions")
           ].map((filter, index) => (
             <Button
               key={index}
               variant="outline"
               className="h-10 rounded-full border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#f0ebe3] px-5"
             >
-              <span className="mr-2">{filter.icon}</span>
-              {filter.label}
+              {filter}
             </Button>
           ))}
         </div>

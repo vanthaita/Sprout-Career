@@ -1,5 +1,5 @@
+'use client'
 import AboutSection from "@/components/section/about";
-import Footer from "@/components/section/footer";
 import HeroSection from "@/components/section/hero";
 import MeetTheTeamSection from "@/components/section/meet.the.team";
 import PostJobSection from "@/components/section/post.job";

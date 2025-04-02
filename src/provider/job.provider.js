@@ -4,8 +4,7 @@ import React from 'react'
 
 const JobProvider = ({children}) => {
     const pathname = usePathname();
-    const job = pathname.split('/')[1];
-    console.log(job);
+    const job = pathname.split('/')[2];
     return (
         <>
             {job === 'jobs' ? (

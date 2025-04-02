@@ -2,6 +2,7 @@
 import React from 'react'
 import { Sprout, Mail, CheckCircle, Briefcase, ArrowRight, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Testimonial from '@/components/alerts/testimonial'
 
 const NewsletterPage = () => {
   const featuredCompanies = [
@@ -67,16 +68,7 @@ const NewsletterPage = () => {
                 </div>
             </div>
             </div>
-        </section>
-        <section className="py-16 px-4">
-            <div className="max-w-4xl mx-auto text-center">
-                <div className="flex items-center justify-center gap-3 mb-6">
-                    <User className="h-8 w-8 text-[#3A6B4C]" />
-                    <h2 className="text-3xl font-serif font-bold text-[#2B463C]">
-                    Join 42,000+ Developers Finding Better Tech Jobs in Japan
-                    </h2>
-                </div>
-            </div>
+            <Testimonial />
         </section>
         <section className="py-12">
             <div className="max-w-6xl mx-auto px-4">

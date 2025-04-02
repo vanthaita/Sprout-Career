@@ -1,0 +1,166 @@
+{
+  "navbar": {
+    "findJobs": "求人を探す",
+    "companies": "企業一覧",
+    "careerGuide": "キャリアガイド",
+    "blog": "ブログ",
+    "alerts": "通知",
+    "employers": "採用ご担当者様",
+    "language": {
+      "en": "ENG",
+      "jp": "日本語"
+    }
+  },
+  "hero": {
+    "goJapan": "Sproutで日本でのキャリアをスタート",
+    "cultivateCareer": "日本のテクノロジー業界でキャリアを築く",
+    "handCurated": "開発者に優しい日本企業の厳選された求人情報",
+    "vettedPositions": "500件以上の審査済み求人",
+    "remoteFriendly": "🌏 リモートワーク可能",
+    "visaSponsorship": "💼 ビザサポート対応",
+    "emailPlaceholder": "メールアドレスを入力",
+    "getJobAlerts": "求人アラートを受け取る",
+    "joinProfessionals": "日本で活躍する42,000人以上のプロフェッショナルに参加 • ",
+    "getSalaryGuide": "給与ガイドを入手"
+  },
+  "companies": {
+    "title": "注目のテクノロジー企業と共に成長する",
+    "subtitle": "Sproutが厳選した開発者に優しい日本企業を発見",
+    "viewPositions": "{count}件の求人を見る",
+    "filters": {
+      "noJapanese": "🇯🇵 日本語不要",
+      "applyOverseas": "✈️ 海外から応募可能",
+      "remoteOptions": "🏠 リモート勤務可"
+    },
+    "location": "勤務地",
+    "positions": "求人情報"
+  },
+  "jobs": {
+    "title": "キャリアを育む",
+    "subtitle": "最新の求人情報 · 更新日 {date}",
+    "filters": {
+      "noJapanese": "🇯🇵 日本語不要",
+      "applyOverseas": "✈️ 海外から応募可能",
+      "remoteOptions": "🏠 リモート勤務可"
+    },
+    "cta": "すべての求人を見る",
+    "locationSeparator": "·",
+    "tagTypes": {
+      "required": "日本語必須",
+      "residentsOnly": "🇯🇵 在留者限定",
+      "salaryRange": "¥{min}万円～¥{max}万円",
+      "remote": "一部リモート可",
+      "fullRemote": "完全リモート勤務"
+    }
+  },
+  "articles": {
+    "title": "日本での就職知識を深める",
+    "subtitle": "日本のテクノロジー業界で成功するための必須ガイド",
+    "readMore": "続きを読む",
+    "articles": [
+      {
+        "title": "ソフトウェア開発者として日本に移住する：実践的FAQ",
+        "description": "日本に移住してソフトウェア開発者として働きたいですか？疑問がありますか？経験者による実践的な回答をご覧ください..."
+      },
+      {
+        "title": "日本のソフトウェア開発者年収：最新ガイド【2024年更新版】",
+        "description": "2024年最新版！日本100社以上のテクノロジー企業からの実データを元に、業界標準の給与水準を分析..."
+      }
+    ]
+  },
+  "team": {
+    "title": "Sproutチームの挑戦",
+    "subtitle": "日本のテクノロジー業界に新たな可能性を育てる情熱的なチーム",
+    "members": {
+      "manami": {
+        "name": "田中 愛美",
+        "role": "共同創業者 & テックリード",
+        "bio": "2013年からシリコンバレーの技術と日本のテクノロジー業界を橋渡し。グローバル人材と日本のイノベーティブな企業の真のマッチングを追求"
+      },
+      "morgan": {
+        "name": "佐藤 モーガン",
+        "role": "デザイン責任者 & UXディレクター",
+        "bio": "東京生まれのデザイナー。日本の美意識とグローバルスタンダードを融合し、意義あるキャリアパスを構築"
+      }
+    },
+    "stats": {
+      "helped": "{count}名の専門家チームが、{number}人以上のプロフェッショナルに日本でのキャリア支援を提供",
+      "remoteTeam": "完全リモートチーム",
+      "nationalities": "🌏 {count}国籍",
+      "basedInTokyo": "🗼 東京本社"
+    }
+  },
+  "about": {
+    "title": "Sproutとは？",
+    "subtitle": "質の高い機会を通じて日本のテクノロジーキャリアを育む",
+    "paragraphs": {
+      "p1": "Sproutは<strong>厳選されたプラットフォーム</strong>で、グローバルテック人材と<strong>日本最高のキャリア機会</strong>を繋ぎます",
+      "p2": "<strong>健全な職場環境</strong>を提供するイノベーティブな企業の<strong>審査済み求人</strong>を掲載",
+      "p3": "厳格な審査により応募企業の90%を選別。<strong>進歩的な文化</strong>と<strong>国際基準</strong>を満たす企業のみを紹介",
+      "p4": "<strong>スタートアップ</strong>から<strong>大企業</strong>まで、真に<strong>成長できる環境</strong>を見つけるお手伝い"
+    },
+    "stats": {
+      "vettedCompanies": "審査済み企業数",
+      "successRate": "就職成功率",
+      "candidateRating": "候補者満足度",
+      "careerGrowth": "キャリア成長事例"
+    },
+    "buttons": {
+      "exploreJobs": "求人を探す",
+      "companyInsights": "企業情報",
+      "salaryGuide": "給与ガイド",
+      "culturalHandbook": "日本就職ハンドブック"
+    },
+    "cta": "日本のテクノロジー業界についてさらに理解を深めませんか？"
+  },
+  "postJob": {
+    "title": "Sproutで優秀な人材を採用",
+    "subtitle": "日本でキャリアを築くグローバルテック人材と出会う",
+    "sections": {
+      "newEmployers": {
+        "title": "新規採用企業様",
+        "description": "最初の求人を掲載し、日本500社以上の先進的テクノロジー企業ネットワークに参加",
+        "button": "求人を掲載"
+      },
+      "existingPartners": {
+        "title": "既存パートナー企業様",
+        "description": "掲載中の求人管理と応募者トラッキング",
+        "button": "採用管理ダッシュボード"
+      }
+    },
+    "alert": {
+      "mainText-first": "企業別ログインURLはオンボーディング時に提供されます。アクセスできない場合は ",
+      "mainText-second": " までご連絡ください",
+      "supportLink": "パートナーサポートチーム",
+      "japaneseText": "採用管理システムのURLは企業ごとに異なります"
+    },
+    "stats": {
+      "vettedCompanies": "審査済み企業数",
+      "hireSuccess": "採用成功率"
+    }
+  },
+  "footer": {
+    "tagline": "日本のテクノロジー業界でキャリアを育む",
+    "emailPlaceholder": "メールアドレスを入力",
+    "growOpportunities": "キャリアの可能性を広げる",
+    "subscribe": "登録",
+    "joinProfessionals": "日本でキャリアを築く42,000人以上のプロフェッショナルに参加",
+    "resources_title": "リソース",
+    "resources": {
+      "salaryGuide": "給与ガイド",
+      "interviewPrep": "面接対策",
+      "blog": "ブログ",
+      "faq": "よくある質問"
+    },
+    "company_title": "企業情報",
+    "company": {
+      "about": "Sproutについて",
+      "careers": "採用情報",
+      "partners": "パートナー企業",
+      "contact": "お問い合わせ"
+    },
+    "copyright": "日本のキャリア形成を支援するプラットフォーム",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfService": "利用規約"
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "navbar": {
+    "findJobs": "Find Jobs",
+    "companies": "Companies",
+    "careerGuide": "Career Guide",
+    "blog": "Blog",
+    "alerts": "Alerts",
+    "employers": "Employers",
+    "language": {
+      "en": "ENG",
+      "jp": "日本語"
+    }
+  },
+  "hero": {
+    "goJapan": "Go japan with Sprout",
+    "cultivateCareer": "Cultivate Your Tech Career in Japan",
+    "handCurated": "Hand-curated opportunities at Japan's most developer-friendly companies",
+    "vettedPositions": "500+ Vetted Positions",
+    "remoteFriendly": "🌏 Remote-Friendly",
+    "visaSponsorship": "💼 Visa Sponsorship",
+    "emailPlaceholder": "Your email address",
+    "getJobAlerts": "Get Job Alerts",
+    "joinProfessionals": "Join 42k+ professionals growing in Japan • ",
+    "getSalaryGuide": "Get Salary Guide"
+  },
+  "companies": {
+    "title": "Cultivate with Leading Tech Companies",
+    "subtitle": "Discover Japan's most developer-friendly workplaces curated by Sprout",
+    "viewPositions": "View {count} Position{s}",
+    "filters": {
+      "noJapanese": "🇯🇵 No Japanese Required",
+      "applyOverseas": "✈️ Apply from Overseas",
+      "remoteOptions": "🏠 Remote Options"
+    },
+    "location": "Location",
+    "positions": "Positions"
+  },
+  "jobs": {
+    "title": "Cultivate Your Career",
+    "subtitle": "Latest Opportunities · Updated {date}",
+    "filters": {
+      "noJapanese": "🇯🇵 No Japanese Required",
+      "applyOverseas": "✈️ Apply from Overseas",
+      "remoteOptions": "🏠 Remote Options"
+    },
+    "cta": "Explore All Opportunities",
+    "locationSeparator": "·",
+    "tagTypes": {
+      "required": "Japanese Required",
+      "residentsOnly": "🇯🇵 Residents Only",
+      "salaryRange": "¥{min}M ~ ¥{max}M",
+      "remote": "Partial Remote",
+      "fullRemote": "Full Remote"
+    }
+  },
+  "articles": {
+    "title": "Cultivate Your Japan Knowledge",
+    "subtitle": "Essential guides for growing your tech career in Japan",
+    "readMore": "Read More",
+    "articles": [
+      {
+        "title": "Moving to Japan as a Software Developer: An Opinionated FAQ",
+        "description": "Want to move to Japan and get a job as software developer? Have questions? I have answers. This i..."
+      },
+      {
+        "title": "Software Developer Salaries in Japan: The Ultimate Guide [Updated 2024]",
+        "description": "Updated for 2024! Featuring hard data from 100+ tech companies in Japan, this guide will teach you ..."
+      }
+    ]
+  },
+  "team": {
+    "title": "Cultivating the Sprout Team",
+    "subtitle": "A passionate team growing opportunities in Japan's tech ecosystem",
+    "members": {
+      "manami": {
+        "name": "Manami Tanaka",
+        "role": "Co-Founder & Tech Lead",
+        "bio": "Bridging Silicon Valley expertise with Japan's tech landscape since 2013. Committed to creating authentic connections between global talent and Japan's most innovative companies."
+      },
+      "morgan": {
+        "name": "Morgan Sato",
+        "role": "Head of Design & UX",
+        "bio": "Tokyo-born designer passionate about creating human-centered experiences. Blending Japanese aesthetics with global tech standards to build meaningful career pathways."
+      }
+    },
+    "stats": {
+      "helped": "Together with our team of {count} passionate growers, we've helped {number}+ professionals blossom in Japan's tech ecosystem.",
+      "remoteTeam": "100% Remote Team",
+      "nationalities": "🌏 {count} Nationalities",
+      "basedInTokyo": "🗼 Based in Tokyo"
+    }
+  },
+  "about": {
+    "title": "What is Sprout?",
+    "subtitle": "Cultivating your tech career in Japan through quality opportunities",
+    "paragraphs": {
+      "p1": "Sprout is a <strong>curated platform</strong> connecting global tech talent with <strong>Japan's best opportunities</strong>.",
+      "p2": "We feature <strong>vetted positions</strong> from innovative companies that value international talent and offer <strong>healthy work environments</strong>.",
+      "p3": "Our rigorous screening rejects <strong>90% of applicants</strong> to ensure only companies with <strong>progressive cultures</strong> and <strong>global standards</strong> are listed.",
+      "p4": "Whether you're seeking <strong>startup agility</strong> or <strong>corporate stability</strong>, we help you find environments where you can truly <strong>grow and thrive</strong>."
+    },
+    "stats": {
+      "vettedCompanies": "Vetted Companies",
+      "successRate": "Success Rate",
+      "candidateRating": "Candidate Rating",
+      "careerGrowth": "Career Growth Stories"
+    },
+    "buttons": {
+      "exploreJobs": "Explore Job Listings",
+      "companyInsights": "Company Insights",
+      "salaryGuide": "Salary Guide",
+      "culturalHandbook": "Cultural Handbook"
+    },
+    "cta": "Want to deepen your understanding of Japan's tech landscape?"
+  },
+  "postJob": {
+    "title": "Grow Your Team with Sprout",
+    "subtitle": "Connect with top global tech talent cultivating their careers in Japan",
+    "sections": {
+      "newEmployers": {
+        "title": "For New Employers",
+        "description": "Post your first job listing and join our ecosystem of 500+ progressive tech companies in Japan",
+        "button": "Post a Job"
+      },
+      "existingPartners": {
+        "title": "Existing Partners",
+        "description": "Manage your active listings and track candidate applications",
+        "button": "Employer Portal"
+      }
+    },
+    "alert": {
+      "mainText-first": "Company-specific signup URLs are provided during onboarding. Can't access your portal? Contact our ",
+      "mainText-second": " for immediate assistance.",
+      "supportLink": "partner support team",
+      "japaneseText": "採用管理システムのURLは企業ごとに異なります"
+    },
+    "stats": {
+      "vettedCompanies": "Vetted Companies",
+      "hireSuccess": "Hire Success Rate"
+    }
+  },
+  "footer": {
+    "tagline": "Cultivating your tech career in Japan",
+    "emailPlaceholder": "Your email address",
+    "growOpportunities": "Grow Your Opportunities",
+    "subscribe": "Subscribe",
+    "joinProfessionals": "Join 42k+ professionals growing their careers in Japan",
+    "resources_title": "Resources",
+    "resources": {
+      "salaryGuide": "Salary Guide",
+      "interviewPrep": "Interview Prep",
+      "blog": "Blog",
+      "faq": "FAQ"
+    },
+    "company_title": "Company",
+    "company": {
+      "about": "About",
+      "careers": "Careers",
+      "partners": "Partners",
+      "contact": "Contact"
+    },
+    "copyright": "Cultivating careers in Japan",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  }
+}

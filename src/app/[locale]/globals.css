@@ -169,7 +169,7 @@ html {
     background-image: url(https://pbs.twimg.com/media/Gm_lhVzacAAecJz?format=jpg&name=4096x4096);
     background-size: 100% 100%;
     background-repeat: repeat;
-    opacity: 0.12;
+    opacity: 0.08;
     mix-blend-mode: multiply;
     z-index: 100;
     isolation: isolate;
@@ -179,6 +179,19 @@ html {
     height: 100dvh;
     pointer-events: none;
   }
+  /* .texture-plane {
+    background-image: url(https://pbs.twimg.com/media/GnDuoGVWgAEYDAm?format=jpg&name=large);
+    background-size: 100% 100%;
+    background-repeat: repeat;
+    opacity: 0.40;
+    mix-blend-mode: multiply;
+    z-index: 100;
+    isolation: isolate;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    pointer-events: none;
+  } */
 }
 
 .scroll-custom::-webkit-scrollbar {

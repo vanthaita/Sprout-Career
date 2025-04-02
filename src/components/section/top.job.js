@@ -3,15 +3,23 @@ import React from 'react';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
 import { Sprout, Leaf } from 'lucide-react';
+import { useLanguage } from '@/hook/useLanguage ';
 
 const TopJobSection = () => {
+  const { t } = useLanguage("jobs");
+  const currentDate = new Date().toISOString().split('T')[0];
+
   const mockDataJobs = [
     {
       id: 1,
       company: "Timee",
       location: "Tokyo",
       title: "エンジニアリングリード / Engineering Lead",
-      tags: ["Japanese Required", "🇯🇵 Residents Only", "¥7.8M ~ ¥14M"],
+      tags: [
+        t("tagTypes.required"),
+        t("tagTypes.residentsOnly"),
+        t("tagTypes.salaryRange", { min: 7.8, max: 14 })
+      ],
       logoUrl: "https://japan-dev.com/cdn/company_logos/timee.png", 
       isNew: true
     },
@@ -20,7 +28,11 @@ const TopJobSection = () => {
       company: "Money Forward",
       location: "Tokyo",
       title: "Corporate Security Division Manager (CISO Office)",
-      tags: ["Japanese Required", "Apply from Abroad", "¥11M ~ ¥15M"],
+      tags: [
+        t("tagTypes.required"),
+        t("filters.applyOverseas"),
+        t("tagTypes.salaryRange", { min: 11, max: 15 })
+      ],
       logoUrl: "https://japan-dev.com/cdn/company_logos/money-forward.png",
       isNew: true
     },
@@ -29,7 +41,11 @@ const TopJobSection = () => {
       company: "Rakuten",
       location: "Tokyo",
       title: "Senior Front-end Engineer",
-      tags: ["Apply from Abroad", "¥6M ~ ¥9M", "Partial Remote"],
+      tags: [
+        t("filters.applyOverseas"),
+        t("tagTypes.salaryRange", { min: 6, max: 9 }),
+        t("tagTypes.remote")
+      ],
       logoUrl: "https://japan-dev.com/cdn/company_logos/rakuten.png",
       isNew: true
     },
@@ -38,8 +54,10 @@ const TopJobSection = () => {
       company: "TableCheck",
       location: "Tokyo",
       title: "Backend Developer - Elixir (Remote)",
-      tags: ["Apply from Abroad", "Full Remote"],
-      technologies: ["Backend"],
+      tags: [
+        t("filters.applyOverseas"),
+        t("tagTypes.fullRemote")
+      ],
       logoUrl: "https://japan-dev.com/cdn/company_logos/tablecheck.png",
       isNew: true
     }
@@ -53,33 +71,28 @@ const TopJobSection = () => {
             <div className='inline-flex items-center gap-3 mb-4'>
               <Sprout className='h-8 w-8 text-[#3A6B4C]' />
               <h2 className='text-3xl font-serif font-bold text-[#2B463C]'>
-                Cultivate Your Career
+                {t("title")}
               </h2>
             </div>
             <p className='text-[#554640]/90'>
-              Latest Opportunities · Updated {new Date().toISOString().split('T')[0]}
+              {t("subtitle", { date: currentDate })}
             </p>
           </div>
 
           <div className='flex flex-wrap justify-center gap-3 w-full max-w-2xl'>
-            <Button 
-              variant='outline' 
-              className='h-9 rounded-full border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#f0ebe3]'
-            >
-              <span className='mr-1.5'>🇯🇵</span> No Japanese Required
-            </Button>
-            <Button 
-              variant='outline' 
-              className='h-9 rounded-full border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#f0ebe3]'
-            >
-              <span className='mr-1.5'>✈️</span> Apply from Overseas
-            </Button>
-            <Button 
-              variant='outline' 
-              className='h-9 rounded-full border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#f0ebe3]'
-            >
-              <span className='mr-1.5'>🏠</span> Remote Options
-            </Button>
+            {[
+              t("filters.noJapanese"),
+              t("filters.applyOverseas"), 
+              t("filters.remoteOptions")
+            ].map((filter, index) => (
+              <Button 
+                key={index}
+                variant='outline' 
+                className='h-9 rounded-full border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#f0ebe3]'
+              >
+                {filter}
+              </Button>
+            ))}
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-6'>
@@ -99,7 +112,7 @@ const TopJobSection = () => {
                   <div className="flex-grow min-w-0">
                     <div className="text-sm text-[#554640]/80 mb-1.5">
                       <span className="font-medium">{job.company}</span>
-                      <span className="mx-2">·</span>
+                      <span className="mx-2">{t("locationSeparator")}</span>
                       <span>{job.location}</span>
                     </div>
 
@@ -112,13 +125,13 @@ const TopJobSection = () => {
                         <span
                           key={index}
                           className={`px-3 py-1 rounded-full text-sm ${
-                            tag.includes("Required") || tag.includes("Only")
+                            tag.includes(t("tagTypes.required")) || 
+                            tag.includes(t("tagTypes.residentsOnly"))
                               ? 'bg-[#3A6B4C]/10 text-[#3A6B4C] border border-[#3A6B4C]/20'
                               : ''
                           }`}
                         >
-                          {tag.startsWith('🇯🇵') ? <span className='mr-1'>{tag.substring(0, tag.indexOf(' '))}</span> : null}
-                          {tag.startsWith('🇯🇵') ? tag.substring(tag.indexOf(' ') + 1) : tag}
+                          {tag}
                         </span>
                       ))}
                     </div>
@@ -133,7 +146,7 @@ const TopJobSection = () => {
             className="mt-8 bg-[#3A6B4C] hover:bg-[#2E5540] text-white rounded-full px-8 py-6"
           >
             <Leaf className="mr-2 h-5 w-5" />
-            Explore All Opportunities
+            {t("cta")}
           </Button>
         </div>
       </div>
