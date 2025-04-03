@@ -1,12 +1,14 @@
 import React from 'react'
 import Options from '../options'
+import { Sprout } from 'lucide-react'
 
 const HeroJobSection = () => {
     return (
       <section className='flex justify-center items-start pb-12 pt-12 md:pt-20 px-4'>
           <div className='flex flex-col items-center justify-center gap-y-4 md:gap-y-6 max-w-５xl text-center'>
-              <div className='relative'>
-                  <h1 className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight'>
+              <div className='relative flex items-center justify-center gap-3 mb-6'>
+                  <Sprout className="h-12 w-12 text-[#3A6B4C]" />
+                  <h1 className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#3A6B4C]'>
                     Search Developer Jobs in Japan
                   </h1>
               </div>

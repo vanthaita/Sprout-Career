@@ -14,7 +14,10 @@ export const useLanguage = (namespace) => {
   }, [pathname]);
 
   const handleLanguageChange = (newLang) => {
-    const newPath = pathname.replace(/^\/[^/]+/, `/${newLang.toLowerCase()}`);
+    const newPath = pathname.replace(/^\/[^/]+/, `${newLang.toLowerCase()}`);
+    console.log("NewLan",newLang);
+    console.log("NewLan",newPath);
+    console.log("Language: ",language)
     router.push(newPath);
   };
 

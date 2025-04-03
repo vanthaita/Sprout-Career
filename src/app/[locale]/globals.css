@@ -166,10 +166,13 @@ html {
     box-shadow: 0 2px 0 0 var(--destructive-border);
   }
   .texture {
-    background-image: url(https://pbs.twimg.com/media/Gm_lhVzacAAecJz?format=jpg&name=4096x4096);
+    /* background-image: url(https://pbs.twimg.com/media/Gm_lhVzacAAecJz?format=jpg&name=4096x4096); */
+    /* background-image:url(https://pbs.twimg.com/media/GnXeaoYaIAA3FSM?format=jpg&name=4096x4096); */
+    background-image:url(https://res.cloudinary.com/dq2z27agv/image/upload/v1743680882/blog-images/cuycw2oriw3sz3vihicn.jpg);
+    /* background-image:url(https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-f018-51f7-89dd-b2c92c71d98d/raw?se=2025-04-03T12%3A50%3A22Z&sp=r&sv=2024-08-04&sr=b&scid=58411f04-475b-54c4-a608-5b2a023a9704&skoid=7c382de0-129f-486b-9922-6e4a89c6eb7d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-03T06%3A38%3A39Z&ske=2025-04-04T06%3A38%3A39Z&sks=b&skv=2024-08-04&sig=yzzsO8LTWSNcZV3n9lgwQANev5khu3qwH8MIb%2B7aD/U%3D); */
     background-size: 100% 100%;
     background-repeat: repeat;
-    opacity: 0.08;
+    opacity: 0.07;
     mix-blend-mode: multiply;
     z-index: 100;
     isolation: isolate;
@@ -259,3 +262,4 @@ html {
     animation: float-leaf-1 8s ease-in-out infinite;
   }
 }
+

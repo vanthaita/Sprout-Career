@@ -57,7 +57,7 @@ const Navbar = () => {
                                     variant="ghost"
                                     size="sm"
                                     className="text-gray-700 hover:bg-[#3A6B4C]/10 gap-2"
-                                    onClick={() => handleLanguageChange(language === 'EN' ? 'JP' : 'EN')}
+                                    onClick={() => handleLanguageChange(language === 'en' ? 'jp' : 'en')}
                                 >
                                     <Globe className="h-4 w-4" />
                                     <span className="font-medium">
