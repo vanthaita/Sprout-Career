@@ -1,8 +1,7 @@
 import { Nunito } from "next/font/google";
 import { PT_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/section/navbar";
-import Footer from "@/components/section/footer";
+
 import JobProvider from "@/provider/job.provider";
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
@@ -38,11 +37,10 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider>
           <div className="texture " />
-            <Navbar/>
             <JobProvider>
               {children}
             </JobProvider>
-          <Footer />
+          
         </NextIntlClientProvider>
       </body>
     </html>

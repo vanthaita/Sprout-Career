@@ -1,19 +1,22 @@
 'use client'
 import { usePathname } from 'next/navigation'
 import React from 'react'
-
+import Navbar from "@/components/section/navbar";
+import Footer from "@/components/section/footer";
 const JobProvider = ({children}) => {
     const pathname = usePathname();
     const job = pathname.split('/')[2];
     return (
         <>
-            {job === 'jobs' ? (
-                <div className="px-6">
+            {job === 'jobs' || job === 'profile' ? (
+                <div className="">
                     {children}
                 </div>
             ) : (
                 <div className="container mx-auto max-w-7xl">
+                    <Navbar/>
                     {children}
+                    <Footer />
                 </div>
             )}
             

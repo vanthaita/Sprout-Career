@@ -263,3 +263,27 @@ html {
   }
 }
 
+.pdf-export-mode {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #dddddd !important;
+}
+
+.pdf-export-mode .bg-slate-50 {
+  background-color: #f8fafc !important;
+}
+
+.pdf-export-mode .bg-slate-100 {
+  background-color: #f1f5f9 !important;
+}
+
+.clip-path-chevron {
+  clip-path: polygon(0% 0%, calc(100% - 12px) 0%, 100% 50%, calc(100% - 12px) 100%, 0% 100%, 12px 50%);
+}
+
+.clip-path-chevron-first {
+   clip-path: polygon(0% 0%, calc(100% - 12px) 0%, 100% 50%, calc(100% - 12px) 100%, 0% 100%);
+}
+.clip-path-chevron-last {
+   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 12px 50%);
+}
