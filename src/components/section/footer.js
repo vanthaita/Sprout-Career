@@ -2,9 +2,10 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Mail, ArrowRight, Leaf, Twitter, Linkedin, Github } from 'lucide-react';
+import { Mail, ArrowRight, Leaf } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/hook/useLanguage ';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
 const Footer = () => {
   const { t } = useLanguage('footer');
@@ -76,16 +77,16 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="border-t border-[#e4d9c8] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="border-t border-[#3A6B4C] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex space-x-4">
               <a href="#" className="text-[#554640]/80 hover:text-[#3A6B4C]">
-                <Twitter className="h-5 w-5" />
+                <FaTwitter className="h-5 w-5" />
               </a>
               <a href="#" className="text-[#554640]/80 hover:text-[#3A6B4C]">
-                <Linkedin className="h-5 w-5" />
+                <FaLinkedin className="h-5 w-5" />
               </a>
               <a href="#" className="text-[#554640]/80 hover:text-[#3A6B4C]">
-                <Github className="h-5 w-5" />
+                <FaGithub className="h-5 w-5" />
               </a>
             </div>
 
