@@ -1,4 +1,3 @@
-import Logo from '@/components/section/logo'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -11,7 +10,7 @@ import { FaLinkedin } from 'react-icons/fa'
 const SignUp = () => {
   return (
     <section className='h-screen flex justify-center items-center '>
-      <Card className='p-8 w-full max-w-md space-y-6'>
+      <Card className='p-8 w-full max-w-md space-y-6 bg-white/30'>
         <div className='flex flex-col items-center gap-y-4'>
           <p className='text-sm text-gray-500'>Sign Up to your account</p>
         </div>

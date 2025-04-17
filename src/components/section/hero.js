@@ -2,7 +2,6 @@ import React from 'react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { ArrowRight, Mail, Leaf } from 'lucide-react'
-import Todoro from '../todoro'
 import { useLanguage } from '@/hook/useLanguage '
 
 
@@ -21,9 +20,6 @@ const HeroSection = () => {
         <div className="flex flex-col items-center gap-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#2B463C] max-w-3xl leading-tight">
             {t("cultivateCareer")}
-            <div className='hidden md:block'>
-              <Todoro />
-            </div>
           </h1>
           
           <div className="space-y-4 max-w-2xl mx-auto">
