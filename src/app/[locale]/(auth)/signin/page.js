@@ -13,7 +13,6 @@ const SignIn = () => {
     <section className='h-screen flex justify-center items-center'>
       <Card className='p-8 w-full max-w-md space-y-6 shadow-lg'>
         <div className='flex flex-col items-center gap-y-4'>
-          {/* <Logo /> */}
           <p className='text-sm text-gray-500'>Sign in to your account</p>
         </div>
         
@@ -55,10 +54,12 @@ const SignIn = () => {
           </div>
           
           <div className='flex justify-center w-full items-center gap-x-2'>
-            <Button variant='outline' className='w-1/2 gap-x-2'>
-              <FcGoogle className='h-4 w-4' />
-              Google
-            </Button>
+            <Link href='http://localhost:8386/api/v1/auth/google'>
+              <Button variant='outline' className='w-1/2 gap-x-2'>
+                <FcGoogle className='h-4 w-4' />
+                Google
+              </Button>
+            </Link>
             <Button variant='outline' className='w-1/2 gap-x-2 text-blue-400'>
               <FaLinkedin className='h-4 w-4' />
               Linkedin

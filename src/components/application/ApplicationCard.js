@@ -203,7 +203,6 @@ export const ApplicationCard = ({ application }) => {
             onClose={handleCloseModal}
             companyData={modalCompanyData}
         />
-
         </>
     );
 };
