@@ -2,7 +2,6 @@ import { Nunito } from "next/font/google";
 import { PT_Sans } from "next/font/google";
 import "./globals.css";
 
-import JobProvider from "@/provider/job.provider";
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
@@ -36,11 +35,7 @@ export default async function RootLayout({
         className={`${nunito.variable} ${ptSans.variable} antialiased relative scroll-custom`} suppressHydrationWarning
       >
         <NextIntlClientProvider>
-          <div className="texture " />
-            <JobProvider>
-              {children}
-            </JobProvider>
-          
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
