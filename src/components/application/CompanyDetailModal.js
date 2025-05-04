@@ -13,10 +13,10 @@ import { Building2, Link as LinkIcon } from 'lucide-react';
 
 const DetailItem = ({ label, value }) => {
     let displayValue = value;
-    if (value === null || value === undefined || value === 'なし' || (Array.isArray(value) && value.length === 0)) {
-        displayValue = <span className="text-gray-500">情報なし</span>;
+    if (value === null || value === undefined || value === 'None' || (Array.isArray(value) && value.length === 0)) {
+        displayValue = <span className="text-gray-500">No information</span>;
     } else if (typeof value === 'boolean') {
-         displayValue = value ? 'はい' : <span className="text-gray-500">情報なし</span>;
+         displayValue = value ? 'Yes' : <span className="text-gray-500">No information</span>;
     }
 
     if (displayValue === value) {
@@ -74,13 +74,12 @@ const DetailItem = ({ label, value }) => {
 
 
 export const CompanyDetailView = ({ companyData, isOpen, onClose }) => {
-
     if (!companyData && isOpen) {
         return (
             <Dialog open={isOpen} onOpenChange={(openState) => !openState && onClose()}>
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
-                        <DialogTitle>企業情報</DialogTitle>
+                        <DialogTitle>Company Information</DialogTitle>
                     </DialogHeader>
                     <div className="p-6 text-center text-gray-500">No company data available.</div>
                 </DialogContent>
@@ -92,36 +91,31 @@ export const CompanyDetailView = ({ companyData, isOpen, onClose }) => {
        return null; 
     }
 
-
     const {
-        法人名: companyNameCombined,
-        本社: headquarters,
-        電話番号: phoneNumber,
-        設立: establishedDate,
-        法人代表者: representative,
-        ベトナム法人: vietnamBranch,
-        事業内容: businessDescription,
-        プログラミング言語: programmingLanguages,
-        勤務時間: workHours,
-        フレックスタイム: flexTime,
-        コアタイム: coreTime,
-        実働時間: actualWorkHours,
-        時間外労働実績: overtime実績,
-        アピールポイント: appealPoints,
-        その他: otherInfo,
-        ホームページ: homepageUrl,
+        legalName: companyNameCombined,
+        headquarters,
+        phoneNumber,
+        established: establishedDate,
+        representative,
+        vietnamEntity,
+        businessDescription,
+        programmingLanguages,
+        workingHours,
+        flextime,
+        coreTime,
+        actualWorkingHours,
+        overtimeRecord,
+        appealPoints,
+        others,
+        website,
         companyLogoUrl,
     } = companyData;
 
-    const [japaneseName] = (companyNameCombined || '').split('\n');
+    const [englishName] = (companyNameCombined || '').split('\n');
 
     const languagesArray = typeof programmingLanguages === 'string'
         ? programmingLanguages.split(',').map(lang => lang.trim()).filter(Boolean)
         : Array.isArray(programmingLanguages) ? programmingLanguages : [];
-
-    const cleanedOvertime = typeof overtime実績 === 'string'
-        ? overtime実績.replace('※ 昨年度時間外労働実績: ','')
-        : overtime実績;
 
     return (
         <Dialog open={isOpen} onOpenChange={(openState) => {
@@ -130,79 +124,82 @@ export const CompanyDetailView = ({ companyData, isOpen, onClose }) => {
                 }
             }}>
             <DialogContent className="sm:max-w-5xl max-h-[90vh] flex flex-col bg-white">
-                    <DialogHeader className="p-6 pb-4 border-b">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <DialogTitle className="text-xl font-semibold text-gray-800">企業情報</DialogTitle>
-                                {japaneseName && <DialogDescription className="mt-1 text-base text-gray-600">{japaneseName}</DialogDescription>}
+                <DialogHeader className="p-6 pb-4 border-b">
+                    <div className="flex justify-between items-start">
+                        <div>
+                            <DialogTitle className="text-xl font-semibold text-gray-800">Company Information</DialogTitle>
+                            {englishName && <DialogDescription className="mt-1 text-base text-gray-600">{englishName}</DialogDescription>}
+                        </div>
+                    </div>
+                </DialogHeader>
+                
+                <ScrollArea className="flex-grow overflow-y-auto px-6 py-4 w-full scroll-custom">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        {/* Company Logo */}
+                        <div className="md:col-span-3 flex justify-center md:justify-start items-start pt-2">
+                            <div className="w-28 h-28 rounded-md border flex items-center justify-center overflow-hidden">
+                                {companyLogoUrl ? (
+                                    <Image
+                                        src={companyLogoUrl}
+                                        alt={`${englishName || 'Company'} logo`}
+                                        width={112}
+                                        height={112}
+                                        className="object-contain"
+                                    />
+                                ) : (
+                                    <div className="text-center text-gray-400">
+                                        <Building2 className="w-12 h-12 mx-auto mb-1" />
+                                        <span className="text-xs">NO LOGO</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
-                    </DialogHeader>
-                <ScrollArea className="flex-grow overflow-y-auto px-6 py-4 w-full scroll-custom">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                    <div className="md:col-span-3 flex justify-center md:justify-start items-start pt-2">
-                         <div className="w-28 h-28 rounded-md border flex items-center justify-center  overflow-hidden">
-                            {companyLogoUrl ? (
-                                <Image
-                                    src={companyLogoUrl}
-                                    alt={`${japaneseName || 'Company'} logo`}
-                                    width={112}
-                                    height={112}
-                                    className="object-contain"
-                                />
-                            ) : (
-                                <div className="text-center text-gray-400">
-                                    <Building2 className="w-12 h-12 mx-auto mb-1" />
-                                    <span className="text-xs">NO LOGO</span>
-                                </div>
-                            )}
+
+                        {/* Company Details */}
+                        <div className="md:col-span-9">
+                            <dl>
+                                <DetailItem label="Legal Name" value={companyNameCombined} />
+                                <DetailItem label="Headquarters" value={headquarters} />
+                                <DetailItem label="Phone Number" value={phoneNumber} />
+                                <DetailItem label="Established" value={establishedDate} />
+                                <DetailItem label="Representative" value={representative} />
+                                <DetailItem label="Vietnam Entity" value={vietnamEntity} />
+                                <DetailItem label="Website" value={website} />
+                                <DetailItem label="Programming Languages" value={languagesArray} />
+                                <DetailItem label="Working Hours" value={workingHours} />
+                                <DetailItem label="Flextime" value={flextime} />
+                                <DetailItem label="Core Time" value={coreTime} />
+                                <DetailItem label="Actual Working Hours" value={actualWorkingHours} />
+                                <DetailItem label="Overtime Record" value={overtimeRecord} />
+                            </dl>
                         </div>
                     </div>
 
-                    <div className="md:col-span-9">
-                        <dl>
-                            <DetailItem label="法人名 (Company Name)" value={companyNameCombined} />
-                            <DetailItem label="本社 (Headquarters)" value={headquarters} />
-                            <DetailItem label="電話番号 (Phone)" value={phoneNumber} />
-                            <DetailItem label="設立 (Established)" value={establishedDate} />
-                            <DetailItem label="法人代表者 (Representative)" value={representative} />
-                            <DetailItem label="ベトナム法人 (Vietnam)" value={vietnamBranch} />
-                            <DetailItem label="ホームページ (Website)" value={homepageUrl} />
-                            <DetailItem label="プログラミング言語 (Languages)" value={languagesArray} />
-                            <DetailItem label="勤務時間 (Work Hours)" value={workHours} />
-                            <DetailItem label="フレックスタイム (Flex Time)" value={flexTime} />
-                            <DetailItem label="コアタイム (Core Time)" value={coreTime} />
-                            <DetailItem label="実働時間 (Actual Hours)" value={actualWorkHours} />
-                            <DetailItem label="時間外労働 (Overtime)" value={overtime実績?.replace('※ 昨年度時間外労働実績: ','')} />
-                        </dl>
-                    </div>
-                </div>
+                    {(businessDescription || appealPoints || others) && (
+                        <Separator className="my-4" />
+                    )}
 
-                 {(businessDescription || appealPoints || otherInfo) && (
-                     <Separator className="my-4" />
-                 )}
+                    {businessDescription && (
+                        <div className="mt-4">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Business Description</h3>
+                            <p className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">{businessDescription}</p>
+                        </div>
+                    )}
 
-                 {businessDescription && (
-                    <div className="mt-4">
-                        <h3 className="text-md font-semibold text-gray-700 mb-2">事業内容 (Business Description)</h3>
-                        <p className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">{businessDescription}</p>
-                    </div>
-                 )}
+                    {appealPoints && (
+                        <div className="mt-6">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Appeal Points</h3>
+                            <p className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">{appealPoints}</p>
+                        </div>
+                    )}
 
-                 {appealPoints && (
-                    <div className="mt-6">
-                        <h3 className="text-md font-semibold text-gray-700 mb-2">アピールポイント (Appeal Points)</h3>
-                    </div>
-                 )}
-
-                 {otherInfo && (
-                    <div className="mt-6">
-                        <h3 className="text-md font-semibold text-gray-700 mb-2">その他 (Other Info)</h3>
-                        <p className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">{otherInfo}</p>
-                    </div>
-                 )}
-
-            </ScrollArea>
+                    {others && (
+                        <div className="mt-6">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Other Information</h3>
+                            <p className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">{others}</p>
+                        </div>
+                    )}
+                </ScrollArea>
             </DialogContent>
         </Dialog>
     );
