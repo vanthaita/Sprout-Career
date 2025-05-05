@@ -3,8 +3,6 @@
 /* --color-blue-gbili: #346FBF */
 @custom-variant dark (&:is(.dark *));
 
-
-
 :root {
   --radius: 0rem;
   --background: oklch(1 0 0);
@@ -72,6 +70,35 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.488 0.243 264.376);
+}
+
+.scrollbar-hide {
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.hover\:scrollbar-default:hover {
+  scrollbar-width: thin;
+  -ms-overflow-style: auto;
+}
+
+.hover\:scrollbar-default:hover::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+  height: 6px;
+}
+
+.hover\:scrollbar-default:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 3px;
+}
+
+.hover\:scrollbar-default:hover::-webkit-scrollbar-track {
+  background-color: rgba(243, 244, 246, 0.5);
 }
 
 .scroll-custom::-webkit-scrollbar {
