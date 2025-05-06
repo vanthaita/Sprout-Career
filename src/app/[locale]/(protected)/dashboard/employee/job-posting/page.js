@@ -21,7 +21,7 @@ const JobPostingsPage = () => {
   ]
 
   return (
-    <div>
+    <div className="py-6 px-4">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold">Job Postings</h1>

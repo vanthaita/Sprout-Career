@@ -26,7 +26,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
-const CandidatePage = () => {
+const CandidateProfilePage = () => {
   const [candidate, setCandidate] = useState({
     fullName: "Alex Johnson",
     email: "alex.johnson@example.com",
@@ -336,4 +336,4 @@ const CandidatePage = () => {
   );
 };
 
-export default CandidatePage;
+export default CandidateProfilePage;

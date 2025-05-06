@@ -1,5 +1,6 @@
 'use client'
 import Logo from '@/components/section/logo';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'; // No need for useState if selection is path-based
 import {
@@ -34,7 +35,6 @@ const SidebarEmployee = () => {
     {
       title: 'Management',
       items: [
-        { name: 'Reports', icon: <FiPieChart size={18} />, pathSegment: '/dashboard/employee/reports' },
         { name: 'Interviews', icon: <FiCalendar size={18} />, pathSegment: '/dashboard/employee/interviews', badge: 5 },
         { name: 'Talent Pool', icon: <FiDatabase size={18} />, pathSegment: '/dashboard/employee/talent-pool' },
         { name: 'Offer Management', icon: <FiAward size={18} />, pathSegment: '/dashboard/employee/offer-management' },
@@ -80,7 +80,7 @@ const SidebarEmployee = () => {
 
                   return (
                     <li key={itemIndex} className="mb-1">
-                      <a
+                      <Link
                         href={href}
                         className={`flex items-center py-3 px-3 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200
                         ${isActive ? 'bg-blue-50 text-blue-600 font-medium' : ''}`} 
@@ -99,7 +99,7 @@ const SidebarEmployee = () => {
                         {isActive && (
                           <FiChevronRight className="ml-2 text-blue-500" size={16} />
                         )}
-                      </a>
+                      </Link>
                     </li>
                   );
                 })}

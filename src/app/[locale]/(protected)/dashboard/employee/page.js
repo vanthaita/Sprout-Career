@@ -10,7 +10,6 @@ const DashboardEmployee = () => {
   const primaryColor = '#3A6B4C';
   const secondaryColor = '#E8F5E9';
 
-  // Sample data
   const stats = [
     { title: "Active Jobs", value: "24", change: "+12%", icon: <Briefcase className="h-5 w-5" /> },
     { title: "Applications", value: "156", change: "+5%", icon: <FileText className="h-5 w-5" /> },
@@ -33,9 +32,8 @@ const DashboardEmployee = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white border-b">
-        <div className="container flex h-16 items-center justify-between px-4">
+        <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <div 
               className="flex h-10 w-10 items-center justify-center rounded-md"
@@ -58,9 +56,7 @@ const DashboardEmployee = () => {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container py-6 px-4 space-y-6">
-        {/* Stats Overview */}
+      <main className="py-6 px-4 space-y-6">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => (
             <Card key={index}>
@@ -82,7 +78,6 @@ const DashboardEmployee = () => {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          {/* Recent Jobs */}
           <Card className="lg:col-span-2">
             <CardHeader>
               <div className="flex items-center justify-between">
@@ -132,7 +127,6 @@ const DashboardEmployee = () => {
             </CardContent>
           </Card>
 
-          {/* Upcoming Interviews */}
           <Card>
             <CardHeader>
               <CardTitle>Upcoming Interviews</CardTitle>
@@ -163,7 +157,6 @@ const DashboardEmployee = () => {
           </Card>
         </div>
 
-        {/* Recent Applications */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
