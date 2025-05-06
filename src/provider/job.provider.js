@@ -8,9 +8,11 @@ const JobProvider = ({children}) => {
     const job = pathname.split('/')[2];
     return (
         <>
-            {job === 'jobs' || job === 'profile' ? (
+            {job === 'jobs' ? (
                 <div className="">
-                    {children}
+                    <Navbar/>
+                        {children}
+                    <Footer />
                 </div>
             ) : (
                 <div className="container mx-auto max-w-7xl">

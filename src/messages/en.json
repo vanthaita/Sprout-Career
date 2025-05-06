@@ -12,25 +12,27 @@
     }
   },
   "hero": {
-    "goJapan": "Go japan with Sprout",
-    "cultivateCareer": "Cultivate Your Tech Career in Japan",
-    "handCurated": "Hand-curated opportunities at Japan's most developer-friendly companies",
+    "platformName": "Sprout Careers",
+    "mainHeading": "Grow Your Career with the Right Opportunities",
+    "subHeading": "Connecting top talent with world-class companies",
     "vettedPositions": "500+ Vetted Positions",
     "remoteFriendly": "🌏 Remote-Friendly",
-    "visaSponsorship": "💼 Visa Sponsorship",
+    "globalOpportunities": "🌍 Global Opportunities",
     "emailPlaceholder": "Your email address",
-    "getJobAlerts": "Get Job Alerts",
-    "joinProfessionals": "Join 42k+ professionals growing in Japan • ",
-    "getSalaryGuide": "Get Salary Guide"
+    "getStarted": "Get Started",
+    "joinCommunity": "Join 50k+ professionals growing their careers • ",
+    "learnMore": "Learn How It Works"
   },
   "companies": {
-    "title": "Cultivate with Leading Tech Companies",
-    "subtitle": "Discover Japan's most developer-friendly workplaces curated by Sprout",
+    "title": "Top Companies Hiring Globally",
+    "subtitle": "Discover developer-friendly workplaces with strong engineering cultures worldwide",
     "viewPositions": "View {count} Position{s}",
     "filters": {
-      "noJapanese": "🇯🇵 No Japanese Required",
-      "applyOverseas": "✈️ Apply from Overseas",
-      "remoteOptions": "🏠 Remote Options"
+      "noJapanese": "🌍 No Local Language Required",
+      "applyOverseas": "✈️ Apply from Anywhere",
+      "remoteOptions": "🏠 Remote Work",
+      "visaSponsorship": "📝 Visa Support",
+      "englishFriendly": "🇬🇧 English OK"
     },
     "location": "Location",
     "positions": "Positions"

@@ -6,11 +6,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useState } from 'react';
+
 const MessagePage = () => {
   const primaryColor = '#3A6B4C';
   const [activeConversation, setActiveConversation] = useState(null);
-
-  // Sample conversations data
+  
   const conversations = [
     {
       id: 1,
@@ -47,7 +47,6 @@ const MessagePage = () => {
     }
   ];
 
-  // Sample messages data
   const messages = [
     { id: 1, sender: "recruiter", content: "Hello Alex, we're impressed with your application!", time: "10:00 AM" },
     { id: 2, sender: "recruiter", content: "Would you be available for an interview next Tuesday?", time: "10:02 AM" },
@@ -58,8 +57,7 @@ const MessagePage = () => {
 
   return (
     <div className="flex h-screen bg-white">
-      {/* Conversation List - shown on desktop, hidden on mobile when chat is open */}
-      <div className={`w-full md:w-96 border-r ${activeConversation ? 'hidden md:block' : 'block'}`}>
+      <div className={`w-full ${activeConversation ? 'hidden' : 'block'}`}>
         <div className="p-4 border-b">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">Messages</h2>
@@ -102,16 +100,15 @@ const MessagePage = () => {
           ))}
         </div>
       </div>
-
-      {/* Chat Area - shown when conversation is selected */}
+      <div className={`${activeConversation ? 'block' : 'hidden'} w-full h-full `}
+      >
       {activeConversation ? (
-        <div className={`flex-1 flex flex-col ${!activeConversation ? 'hidden md:flex' : 'flex'}`}>
-          {/* Chat Header */}
+        <div className={`flex-1 flex flex-col h-full`}>
           <div className="p-4 border-b flex items-center">
             <Button 
               variant="ghost" 
               size="icon" 
-              className="md:hidden mr-2"
+              className="mr-2"
               onClick={() => setActiveConversation(null)}
             >
               <ChevronLeft className="h-5 w-5" />
@@ -126,7 +123,6 @@ const MessagePage = () => {
             </div>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 p-4 overflow-y-auto">
             <div className="space-y-4">
               {messages.map((message) => (
@@ -147,7 +143,6 @@ const MessagePage = () => {
             </div>
           </div>
 
-          {/* Message Input */}
           <div className="p-4 border-t">
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="icon">
@@ -167,7 +162,6 @@ const MessagePage = () => {
           </div>
         </div>
       ) : (
-        /* Empty state when no conversation is selected (mobile view) */
         <div className="hidden md:flex flex-1 flex-col items-center justify-center bg-gray-50">
           <div className="text-center p-6">
             <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -179,6 +173,7 @@ const MessagePage = () => {
         </div>
       )}
     </div>
+      </div>
   );
 };
 

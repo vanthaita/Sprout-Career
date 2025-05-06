@@ -6,14 +6,13 @@ import PostJobSection from "@/components/section/post.job";
 import TopArticlesSection from "@/components/section/top.articles";
 import TopCompanySection from "@/components/section/top.company";
 import TopJobSection from "@/components/section/top.job";
-
 import JobProvider from "@/provider/job.provider";
 
 export default function Home() {
   return (
     <>
       <JobProvider>
-      <HeroSection />
+        <HeroSection />
         <TopJobSection />
         <TopCompanySection />
         <TopArticlesSection />

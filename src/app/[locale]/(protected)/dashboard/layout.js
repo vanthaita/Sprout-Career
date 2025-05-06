@@ -2,7 +2,7 @@ import React from 'react'
 
 const DashBoardLayout = ({children}) => {
   return (
-    <>{children}</>
+    <div className='antialiased relative scroll-custom'>{children}</div>
   )
 }
 

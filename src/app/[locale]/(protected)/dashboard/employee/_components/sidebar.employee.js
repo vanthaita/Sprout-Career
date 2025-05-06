@@ -35,7 +35,6 @@ const SidebarEmployee = () => {
     {
       title: 'Management',
       items: [
-        { name: 'Reports', icon: <FiPieChart size={18} />, pathSegment: '/dashboard/employee/reports' },
         { name: 'Interviews', icon: <FiCalendar size={18} />, pathSegment: '/dashboard/employee/interviews', badge: 5 },
         { name: 'Talent Pool', icon: <FiDatabase size={18} />, pathSegment: '/dashboard/employee/talent-pool' },
         { name: 'Offer Management', icon: <FiAward size={18} />, pathSegment: '/dashboard/employee/offer-management' },
