@@ -16,9 +16,10 @@ import {
 } from 'react-icons/fi';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { useUserProfile } from '@/context/useUserProfile';
 const SidebarCandidate = () => {
   const pathname = usePathname();
-
+  const { profile } = useUserProfile();
   const menuItems = [
     { name: 'Dashboard', icon: <FiHome size={18} />, pathSegment: '/dashboard/candidate' },
     { name: 'Messages', icon: <FiMail size={18} />, pathSegment: '/dashboard/candidate/messages', badge: 4 },
@@ -123,7 +124,7 @@ const SidebarCandidate = () => {
             <FiUser className="text-gray-500" size={16} />
           </div>
           <div className="flex-1"> 
-            <p className="text-sm font-medium text-gray-800">John Doe</p>
+            <p className="text-sm font-medium text-gray-800">{profile?.fullName || 'John Doe'}</p>
             <p className="text-xs text-gray-500">Candidate</p>
           </div>
           <FiChevronRight className="text-gray-400" size={16} />

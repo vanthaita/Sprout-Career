@@ -1,5 +1,7 @@
 'use client'
 import Logo from '@/components/section/logo';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useUserProfile } from '@/context/useUserProfile';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'; // No need for useState if selection is path-based
@@ -21,31 +23,32 @@ import {
 
 const SidebarEmployee = () => {
   const pathname = usePathname();
+  const { profile } = useUserProfile();
   const menuSections = [
     {
       title: 'Recruitment',
       items: [
-        { name: 'Dashboard', icon: <FiHome size={18} />, pathSegment: '/dashboard/employee' },
-        { name: 'Messages', icon: <FiMail size={18} />, pathSegment: '/dashboard/employee/messages', badge: 3 },
-        { name: 'Calendar', icon: <FiCalendar size={18} />, pathSegment: '/dashboard/employee/calendar' },
-        { name: 'Job Postings', icon: <FiBriefcase size={18} />, pathSegment: '/dashboard/employee/job-posting' },
-        { name: 'Candidates', icon: <FiUsers size={18} />, pathSegment: '/dashboard/employee/candidates' },
+        { name: 'Dashboard', icon: <FiHome size={18} />, pathSegment: '/dashboard/employer' },
+        { name: 'Messages', icon: <FiMail size={18} />, pathSegment: '/dashboard/employer/messages', badge: 3 },
+        { name: 'Calendar', icon: <FiCalendar size={18} />, pathSegment: '/dashboard/employer/calendar' },
+        { name: 'Job Postings', icon: <FiBriefcase size={18} />, pathSegment: '/dashboard/employer/job-posting' },
+        { name: 'Candidates', icon: <FiUsers size={18} />, pathSegment: '/dashboard/employer/candidates' },
       ],
     },
     {
       title: 'Management',
       items: [
-        { name: 'Interviews', icon: <FiCalendar size={18} />, pathSegment: '/dashboard/employee/interviews', badge: 5 },
-        { name: 'Talent Pool', icon: <FiDatabase size={18} />, pathSegment: '/dashboard/employee/talent-pool' },
-        { name: 'Offer Management', icon: <FiAward size={18} />, pathSegment: '/dashboard/employee/offer-management' },
+        { name: 'Interviews', icon: <FiCalendar size={18} />, pathSegment: '/dashboard/employer/interviews', badge: 5 },
+        { name: 'Talent Pool', icon: <FiDatabase size={18} />, pathSegment: '/dashboard/employer/talent-pool' },
+        { name: 'Offer Management', icon: <FiAward size={18} />, pathSegment: '/dashboard/employer/offer-management' },
       ],
     },
     {
       title: 'Other',
       items: [
-        { name: 'Onboarding', icon: <FiLayers size={18} />, pathSegment: '/dashboard/employee/onboarding' },
-        { name: 'Notifications', icon: <FiBell size={18} />, pathSegment: '/dashboard/employee/notifications', badge: 2 },
-        { name: 'Settings', icon: <FiSettings size={18} />, pathSegment: '/dashboard/employee/settings' },
+        { name: 'Onboarding', icon: <FiLayers size={18} />, pathSegment: '/dashboard/employer/onboarding' },
+        { name: 'Notifications', icon: <FiBell size={18} />, pathSegment: '/dashboard/employer/notifications', badge: 2 },
+        { name: 'Settings', icon: <FiSettings size={18} />, pathSegment: '/dashboard/employer/settings' },
       ],
     },
   ];
@@ -112,10 +115,16 @@ const SidebarEmployee = () => {
       <div className="p-4 border-t border-gray-100">
         <div className="flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition duration-200">
           <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-            <FiUser className="text-gray-500" size={16} />
+            {/* <FiUser className="text-gray-500" size={16} /> */}
+            <Avatar>
+              <AvatarImage src={profile?.avatar} alt="User avatar" />
+              <AvatarFallback>
+                {'U'}
+              </AvatarFallback>
+            </Avatar>
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium text-gray-800">Recruiter Name</p>
+            <p className="text-sm font-medium text-gray-800">{profile?.fullName || 'Recruiter Name'}</p>
             <p className="text-xs text-gray-500">HR Department</p>
           </div>
           <FiChevronRight className="text-gray-400" size={16} />

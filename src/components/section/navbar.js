@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
 import Logo from "./logo";
-import { Bell, Globe, Building2, Menu, X } from "lucide-react";
+import { Bell, Globe, Building2, Menu, X, User2Icon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { useLanguage } from "@/hook/useLanguage ";
@@ -48,10 +48,18 @@ const Navbar = () => {
                                 variant="ghost"
                                 className="text-gray-700 hover:bg-[#3A6B4C]/10 gap-2"
                             >
-                                <Building2 className="h-4 w-4" />
-                                {t("employers")}
+                                <User2Icon className="h-4 w-4" />
+                                {t("candidates")}
                             </Button>
-                            
+                            <div className="border-l border-[#e4d9c8] pl-4">
+                                <Button
+                                    variant="ghost"
+                                    className="text-gray-700 hover:bg-[#3A6B4C]/10 gap-2 "
+                                >
+                                    <Building2 className="h-4 w-4" />
+                                    {t("employers")}
+                                </Button>
+                            </div>
                             <div className="flex items-center border-l border-[#e4d9c8] pl-4">
                                 <Button
                                     variant="ghost"
@@ -101,6 +109,16 @@ const Navbar = () => {
                         >
                             <Building2 className="h-4 w-4" />
                             {t("employers")}
+                        </Button>
+
+                        <Button
+                            variant="ghost"
+                            className="w-full justify-start text-gray-700 hover:bg-gray-100 gap-2 py-3 px-2"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            <Building2 className="h-4 w-4" />
+                            {/* {t("employers")} */}
+                            Emloyer
                         </Button>
                         
                         <div className="mt-2 pt-2 border-t border-[#e4d9c8]">
