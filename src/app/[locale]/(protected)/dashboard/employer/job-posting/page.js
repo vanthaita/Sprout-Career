@@ -1,53 +1,42 @@
 'use client'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { useState, useEffect } from 'react'
+import { 
+  Filter, 
+  Briefcase,  MapPin, Clock, DollarSign, Bookmark, 
+  MoreHorizontal,
+  Download,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Filter, Download, StickyNote, Plus } from "lucide-react"
-import { useEffect, useState } from "react"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import axiosInstance from "@/axios/axiosIntance"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import axiosInstance from '@/axios/axiosIntance'
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
+import { useRouter } from 'next/navigation'
 
-const JobPostingsPage = () => {
+const EmployeeCandidatesPage = () => {
   const [jobs, setJobs] = useState([])
   const [loading, setLoading] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [currentJob, setCurrentJob] = useState(null)
   const router = useRouter()
 
-  const fetchJobs = async () => {
-    try {
-      setLoading(true)
-      const response = await axiosInstance.get('/employer/jobs')
-      console.log(response.data.data.data);
-      setJobs(response.data.data.data || []) 
-    } catch (error) {
-      console.error("Error fetching jobs:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
+    const fetchJobs = async () => {
+      setLoading(true)
+      try {
+        const res = await axiosInstance.get('/employer/jobs')
+        setJobs(res.data.data?.data || [])
+      } catch (error) {
+        console.error("Error fetching jobs:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
     fetchJobs()
   }, [])
 
   const handleDeleteJob = async (jobId) => {
     try {
       await axiosInstance.delete(`/employer/jobs/${jobId}`)
-      toast({
-        title: "Success",
-        description: "Job deleted successfully",
-      })
       fetchJobs()
     } catch (error) {
       console.error("Error deleting job:", error)
@@ -61,6 +50,10 @@ const JobPostingsPage = () => {
 
   const navigateToEdit = (job) => {
     router.push(`/dashboard/employer/job-posting/new?jobId=${job.id}`)
+  }
+
+  const navigateToApplications = (jobId) => {
+    router.push(`/en/dashboard/employer/job-posting/applications?jobId=${jobId}`)
   }
 
   const formatSalaryRange = (job) => {
@@ -87,26 +80,33 @@ const JobPostingsPage = () => {
     })
   }
 
+  const renderTags = (tags) => {
+    if (!tags) return null
+    return tags.split(',').map((tag, index) => (
+      <Badge key={index} variant="outline" className="mr-2 mb-2">
+        {tag.trim()}
+      </Badge>
+    ))
+  }
+
+  const renderBenefits = (benefits) => {
+    if (!benefits || benefits.length === 0) return null
+    return benefits.map((benefit, index) => (
+      <Badge key={index} variant="outline" className="mr-2 mb-2 capitalize">
+        {benefit.replace(/_/g, ' ')}
+      </Badge>
+    ))
+  }
+
   return (
     <div className="min-h-screen">
       <header className="bg-white border-b">
         <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#3A6B4C]">
-              <StickyNote className="h-5 w-5 text-white" />
+              <Briefcase className="h-5 w-5 text-white" />
             </div>
-            <h1 className="text-lg font-semibold">Job Postings</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="/dashboard/employer/job-posting/new">
-              <Button 
-                style={{ backgroundColor: '#3A6B4C' }} 
-                className='text-white cursor-pointer'
-              >
-                <Plus className="mr-2 h-4 w-4" />
-                New Job Posting
-              </Button>
-            </Link>
+            <h1 className="text-lg font-semibold">Your Job Postings</h1>
           </div>
         </div>
       </header>
@@ -224,63 +224,94 @@ const JobPostingsPage = () => {
             </div>
           </CardFooter>
         </Card>
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#3A6B4C]"></div>
+          </div>
+        ) : jobs.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {jobs.map(job => (
+              <Card 
+                key={job.id} 
+                className="hover:shadow-md transition-shadow"
+              >
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="text-lg">{job.title}</CardTitle>
+                      <CardDescription className="mt-1">
+                        <div className="flex items-center gap-2 text-sm">
+                          <MapPin className="h-4 w-4" /> {job.location}
+                        </div>
+                      </CardDescription>
+                    </div>
+                    <Badge 
+                      variant={
+                        job.status === "APPROVED" ? "default" :
+                        job.status === "PENDING" ? "secondary" :
+                        job.status === "REJECTED" ? "destructive" : "outline"
+                      }
+                      style={job.status === "APPROVED" ? { backgroundColor: '#3A6B4C', color: '#FFFFFF'} : {}}
+                    >
+                      {job.status}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4 text-gray-500" />
+                        <span className="text-sm">{job.jobType.replace('_', ' ')}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <DollarSign className="h-4 w-4 text-gray-500" />
+                        <span className="text-sm">{job.salaryRange}</span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-sm font-medium mb-1">Tags</h4>
+                      <div className="flex flex-wrap">
+                        {renderTags(job.tags)}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-sm font-medium mb-1">Benefits</h4>
+                      <div className="flex flex-wrap">
+                        {renderBenefits(job.benefits)}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <span className="text-sm text-gray-500">
+                    Posted: {formatDate(job.postedDate)}
+                  </span>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => navigateToApplications(job.id)}
+                  >
+                    View Candidates
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-12 bg-white rounded-lg border">
+            <Bookmark className="h-12 w-12 text-gray-400 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-1">No job postings found</h3>
+            <p className="text-sm text-gray-500">
+              Create your first job posting to start receiving applications
+            </p>
+          </div>
+        )}
       </div>
-
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>Job Details</DialogTitle>
-          </DialogHeader>
-          {currentJob && (
-            <div className="grid gap-4 py-4">
-              <div className="space-y-2">
-                <Label>Title</Label>
-                <p>{currentJob.title || "Not specified"}</p>
-              </div>
-              <div className="space-y-2">
-                <Label>Description</Label>
-                <p>{currentJob.description || "Not specified"}</p>
-              </div>
-              <div className="space-y-2">
-                <Label>Requirements</Label>
-                <p>{currentJob.requirements || "Not specified"}</p>
-              </div>
-              <div className="space-y-2">
-                <Label>Job Type</Label>
-                <p>{currentJob.jobType ? currentJob.jobType.replace('_', ' ') : "Not specified"}</p>
-              </div>
-              <div className="space-y-2">
-                <Label>Location</Label>
-                <p>{currentJob.location || "Not specified"}</p>
-              </div>
-              <div className="space-y-2">
-                <Label>Salary Range</Label>
-                <p>{formatSalaryRange(currentJob)}</p>
-              </div>
-              <div className="space-y-2">
-                <Label>Tags</Label>
-                <p>{currentJob.tags || "Not specified"}</p>
-              </div>
-              <div className="space-y-2">
-                <Label>Benefits</Label>
-                <div className="flex flex-wrap gap-2">
-                  {currentJob.benefits?.length > 0 ? (
-                    currentJob.benefits.map((benefit, index) => (
-                      <Badge key={index} variant="outline">
-                        {benefit.replace('_', ' ')}
-                      </Badge>
-                    ))
-                  ) : (
-                    <p>Not specified</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
 
-export default JobPostingsPage
+export default EmployeeCandidatesPage;
