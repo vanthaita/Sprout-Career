@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import React, { useState } from 'react'
-import { Sprout, Search, Globe, CheckCircle } from 'lucide-react'
+import { Sprout, Search, Globe, CheckCircle, ArrowLeft } from 'lucide-react' // Thêm ArrowLeft
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 import Pagination from '@/components/job/pagination.job'
+import Link from 'next/link' // Đảm bảo đã import Link
 
 const CompaniesPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -37,19 +38,64 @@ const CompaniesPage = () => {
   const filteredCompanies = mockCompanies.filter(company => {
     const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       company.description.toLowerCase().includes(searchTerm.toLowerCase())
-    
+
     const matchesFilters = (
       (!filters.location || company.location === filters.location) &&
       (!filters.size || company.size === filters.size) &&
       (!filters.industry || company.industry === filters.industry) &&
       (!filters.visaSponsorship || company.visa)
     )
-    
+
     return matchesSearch && matchesFilters
   })
 
   return (
     <div className="min-h-screen">
+
+      <div className="max-w-6xl mx-auto px-4 pt-6 sm:px-6 lg:px-8">
+        <nav aria-label="Breadcrumb" className="text-lg">
+          <ol className="inline-flex items-center space-x-2">
+            <li>
+              <Link
+                href="/"
+                className="
+            px-3 py-1 
+            text-base font-medium 
+            text-[#3A6B4C] 
+            bg-white 
+            border border-[#3A6B4C] 
+            rounded-full 
+            hover:bg-[#3A6B4C] hover:text-white 
+            transition-colors
+          "
+              >
+                Home
+              </Link>
+            </li>
+
+            <li>
+              <span className="text-gray-400">/</span>
+            </li>
+
+            <li>
+              <span
+                className="
+            px-3 py-1 
+            text-base font-medium 
+            text-gray-700 
+            bg-gray-100 
+            border border-gray-200 
+            rounded-full
+          "
+              >
+                Companies
+              </span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+
       <section className="pt-20 pb-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
@@ -58,7 +104,7 @@ const CompaniesPage = () => {
               Discover Tech Companies in Japan
             </h1>
           </div>
-          
+
           <div className="flex flex-col md:flex-row justify-center gap-8 text-[#554640]/90 mb-8">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-6 h-6 text-[#3A6B4C]" />
@@ -89,7 +135,7 @@ const CompaniesPage = () => {
           <div className="flex flex-wrap gap-4 items-center">
             <Select
               value={filters.location}
-              onValueChange={(value) => setFilters({...filters, location: value})}
+              onValueChange={(value) => setFilters({ ...filters, location: value })}
             >
               <SelectTrigger className="w-[180px] focus:ring-[#3A6B4C]">
                 <SelectValue placeholder="All Locations" />
@@ -102,7 +148,7 @@ const CompaniesPage = () => {
 
             <Select
               value={filters.size}
-              onValueChange={(value) => setFilters({...filters, size: value})}
+              onValueChange={(value) => setFilters({ ...filters, size: value })}
             >
               <SelectTrigger className="w-[180px] focus:ring-[#3A6B4C]">
                 <SelectValue placeholder="Company Size" />
@@ -117,7 +163,7 @@ const CompaniesPage = () => {
               <Checkbox
                 id="visaSponsorship"
                 checked={filters.visaSponsorship}
-                onCheckedChange={(checked) => setFilters({...filters, visaSponsorship: !!checked})}
+                onCheckedChange={(checked) => setFilters({ ...filters, visaSponsorship: !!checked })}
                 className="text-[#3A6B4C] border-[#2B463C]"
               />
               <label
@@ -152,8 +198,8 @@ const CompaniesPage = () => {
               className="p-6 hover:shadow-lg transition-all duration-300 "
             >
               <div className="flex items-start gap-4 mb-4">
-                <img 
-                  src={company.logo} 
+                <img
+                  src={company.logo}
                   alt={company.name}
                   className="w-16 h-16 object-contain  p-1.5"
                 />
@@ -165,9 +211,9 @@ const CompaniesPage = () => {
                   </div>
                 </div>
               </div>
-              
+
               <p className="text-[#554640]/90 mb-4">{company.description}</p>
-              
+
               <div className="flex flex-wrap gap-2 mb-4">
                 {company.benefits.map((benefit, index) => (
                   <Badge
@@ -192,10 +238,25 @@ const CompaniesPage = () => {
             </Card>
           ))}
         </div>
-        
+
         <div className="mt-8">
           <Pagination className="justify-center" />
         </div>
+
+        {/* Thêm Back to Home button ở đây */}
+        <div className="mt-8 flex justify-center pb-12">
+          <Button
+            asChild
+            variant="outline"
+            className="group border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#3A6B4C]/10" // Thêm class hover ở đây
+          >
+            <Link href="/" className="flex items-center">
+              <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              Back to Home
+            </Link>
+          </Button>
+        </div>
+
       </section>
     </div>
   )

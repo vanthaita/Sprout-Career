@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
-import { Sprout, BookOpen, Download, Mail, ArrowRight, HelpCircle } from 'lucide-react'
+import { Sprout, BookOpen, Download, Mail, ArrowRight, ArrowLeft, HelpCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -48,6 +48,51 @@ const GuidePage = () => {
 
   return (
     <div className="min-h-screen">
+
+
+      <div className="max-w-6xl mx-auto px-4 pt-6 sm:px-6 lg:px-8">
+        <nav aria-label="Breadcrumb" className="text-lg">
+          <ol className="inline-flex items-center space-x-2">
+            <li>
+              <Link
+                href="/"
+                className="
+            px-3 py-1 
+            text-base font-medium 
+            text-[#3A6B4C] 
+            bg-white 
+            border border-[#3A6B4C] 
+            rounded-full 
+            hover:bg-[#3A6B4C] hover:text-white 
+            transition-colors
+          "
+              >
+                Home
+              </Link>
+            </li>
+
+            <li>
+              <span className="text-gray-400">/</span>
+            </li>
+
+            <li>
+              <span
+                className="
+            px-3 py-1 
+            text-base font-medium 
+            text-gray-700 
+            bg-gray-100 
+            border border-gray-200 
+            rounded-full
+          "
+              >
+                Career Guide
+              </span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+
       <section className="pt-20 pb-16 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
@@ -131,8 +176,8 @@ const GuidePage = () => {
                   {article.title}
                 </h3>
                 <div className="flex items-center text-[#3A6B4C] font-medium">
-                    <span className="mr-2">Read More</span>
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <span className="mr-2">Read More</span>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </Link>
             ))}
@@ -142,22 +187,25 @@ const GuidePage = () => {
 
       <section className="py-16 px-4">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-serif font-bold text-[#2B463C] mb-12 text-center">
+          <h2 className="text-3xl font-serif font-bold text-[#2B463C] mb-8 text-center">
             Career Growth FAQs
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div key={index} className="border rounded-xl p-6">
+              <div
+                key={index}
+                className="border rounded-xl p-4 hover:bg-[#f7f5f2] transition-colors"
+              >
                 <details className="group">
                   <summary className="flex items-center justify-between cursor-pointer">
                     <div className="flex items-center gap-3">
-                      <HelpCircle className="w-5 h-5 text-[#3A6B4C]" />
+                      <HelpCircle className="w-5 h-5 text-[#3A6B4C] flex-shrink-0" />
                       <span className="text-lg font-medium text-[#2B463C]">
                         {faq.question}
                       </span>
                     </div>
                   </summary>
-                  <p className="mt-4 pl-8 text-[#554640]/90">
+                  <p className="mt-3 ml-8 text-[#554640]/90 leading-relaxed">
                     {faq.answer}
                   </p>
                 </details>
@@ -166,6 +214,20 @@ const GuidePage = () => {
           </div>
         </div>
       </section>
+
+      {/* Back to Home Button - Đã chỉnh sửa */}
+      <div className="mt-6 flex justify-center pb-12">
+        <Button
+          asChild
+          variant="outline"
+          className="group border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#3A6B4C]/10 h-11 px-5 text-base"
+        >
+          <Link href="/" className="flex items-center">
+            <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            Back to Home
+          </Link>
+        </Button>
+      </div>
     </div>
   )
 }
