@@ -25,7 +25,7 @@ const JobsPage = () => {
             </li>
             <li>
               <span className="px-3 py-1 text-base font-medium text-gray-700 bg-gray-100 border border-gray-200 rounded-full">
-                Career Guide
+                Find Jobs
               </span>
             </li>
           </ol>

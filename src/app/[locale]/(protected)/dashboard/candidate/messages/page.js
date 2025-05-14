@@ -10,7 +10,7 @@ import { useState } from 'react';
 const MessagePage = () => {
   const primaryColor = '#3A6B4C';
   const [activeConversation, setActiveConversation] = useState(null);
-  
+
   const conversations = [
     {
       id: 1,
@@ -74,7 +74,7 @@ const MessagePage = () => {
 
         <div className="overflow-y-auto h-[calc(100vh-120px)]">
           {conversations.map((convo) => (
-            <div 
+            <div
               key={convo.id}
               className={`flex items-center p-4 border-b hover:bg-gray-50 cursor-pointer ${activeConversation?.id === convo.id ? 'bg-gray-50' : ''}`}
               onClick={() => setActiveConversation(convo)}
@@ -102,78 +102,78 @@ const MessagePage = () => {
       </div>
       <div className={`${activeConversation ? 'block' : 'hidden'} w-full h-full `}
       >
-      {activeConversation ? (
-        <div className={`flex-1 flex flex-col h-full`}>
-          <div className="p-4 border-b flex items-center">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="mr-2"
-              onClick={() => setActiveConversation(null)}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <Avatar className="mr-3">
-              <AvatarImage src={activeConversation.recruiter.avatar} />
-              <AvatarFallback>{activeConversation.recruiter.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-            </Avatar>
-            <div>
-              <h3 className="font-medium">{activeConversation.recruiter.name}</h3>
-              <p className="text-sm text-gray-500">{activeConversation.recruiter.company}</p>
+        {activeConversation ? (
+          <div className={`flex-1 flex flex-col h-full`}>
+            <div className="p-4 border-b flex items-center">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="mr-2"
+                onClick={() => setActiveConversation(null)}
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <Avatar className="mr-3">
+                <AvatarImage src={activeConversation.recruiter.avatar} />
+                <AvatarFallback>{activeConversation.recruiter.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="font-medium">{activeConversation.recruiter.name}</h3>
+                <p className="text-sm text-gray-500">{activeConversation.recruiter.company}</p>
+              </div>
             </div>
-          </div>
 
-          <div className="flex-1 p-4 overflow-y-auto">
-            <div className="space-y-4">
-              {messages.map((message) => (
-                <div 
-                  key={message.id}
-                  className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div 
-                    className={`max-w-xs md:max-w-md rounded-lg px-4 py-2 ${message.sender === 'me' ? 'bg-[#3A6B4C] text-white rounded-tr-none' : 'bg-gray-100 rounded-tl-none'}`}
+            <div className="flex-1 p-4 overflow-y-auto">
+              <div className="space-y-4">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
                   >
-                    <p>{message.content}</p>
-                    <p className={`text-xs mt-1 ${message.sender === 'me' ? 'text-white/70' : 'text-gray-500'}`}>
-                      {message.time}
-                    </p>
+                    <div
+                      className={`max-w-xs md:max-w-md rounded-lg px-4 py-2 ${message.sender === 'me' ? 'bg-[#3A6B4C] text-white rounded-tr-none' : 'bg-gray-100 rounded-tl-none'}`}
+                    >
+                      <p>{message.content}</p>
+                      <p className={`text-xs mt-1 ${message.sender === 'me' ? 'text-white/70' : 'text-gray-500'}`}>
+                        {message.time}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="p-4 border-t">
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon">
-                <Paperclip className="h-5 w-5" />
-              </Button>
-              <Input
-                placeholder="Type a message..."
-                className="flex-1"
-              />
-              <Button variant="ghost" size="icon">
-                <Smile className="h-5 w-5" />
-              </Button>
-              <Button size="icon" style={{ backgroundColor: primaryColor }}>
-                <Send className="h-5 w-5 text-white" />
-              </Button>
+            <div className="p-4 border-t">
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon">
+                  <Paperclip className="h-5 w-5" />
+                </Button>
+                <Input
+                  placeholder="Type a message..."
+                  className="flex-1"
+                />
+                <Button variant="ghost" size="icon">
+                  <Smile className="h-5 w-5" />
+                </Button>
+                <Button size="icon" style={{ backgroundColor: primaryColor }}>
+                  <Send className="h-5 w-5 text-white" />
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="hidden md:flex flex-1 flex-col items-center justify-center bg-gray-50">
-          <div className="text-center p-6">
-            <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900">Select a conversation</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              Choose a message from the list to start chatting
-            </p>
+        ) : (
+          <div className="hidden md:flex flex-1 flex-col items-center justify-center bg-gray-50">
+            <div className="text-center p-6">
+              <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900">Select a conversation</h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Choose a message from the list to start chatting
+              </p>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
       </div>
+    </div>
   );
 };
 
