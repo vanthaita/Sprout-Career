@@ -29,17 +29,19 @@ const ApplicationsPage = () => {
 
     const statusOptions = [
         { value: 'all', label: 'All Statuses' },
-        { value: 'SUBMITTED', label: 'Submitted' },
-        { value: 'REVIEWED', label: 'Reviewed' },
-        { value: 'INTERVIEW', label: 'Interview' },
-        { value: 'HIRED', label: 'Hired' },
+        { value: 'APPLICATION_SUBMITTED', label: 'Submitted' },
+        { value: 'DOCUMENT_SCREENING', label: 'Reviewed' },
+        { value: 'FIRST_INTERVIEW', label: 'First Interview' },
+        { value: 'SECOND_INTERVIEW', label: 'Second Interview' },
+        { value: 'OFFER_STAGE', label: 'Hired' },
         { value: 'REJECTED', label: 'Rejected' }
-    ]
+    ];
+
 
     useEffect(() => {
         if (jobId) {
-        fetchJobDetails()
-        fetchApplications()
+            fetchJobDetails()
+            fetchApplications()
         }
     }, [jobId])
 
@@ -58,6 +60,7 @@ const ApplicationsPage = () => {
         const res = await axiosInstance.get(`/employer/applications`, {
             jobId 
         })
+        console.log(res.data.data?.data);
         setApplications(res.data.data?.data || [])
         } catch (error) {
         console.error("Error fetching applications:", error)
@@ -68,15 +71,24 @@ const ApplicationsPage = () => {
     }
 
     const getStatusColor = (status) => {
-        switch(status) {
-        case 'SUBMITTED': return 'bg-blue-100 text-blue-800'
-        case 'REVIEWED': return 'bg-purple-100 text-purple-800'
-        case 'INTERVIEW': return 'bg-yellow-100 text-yellow-800'
-        case 'HIRED': return 'bg-green-100 text-green-800'
-        case 'REJECTED': return 'bg-red-100 text-red-800'
-        default: return 'bg-gray-100 text-gray-800'
+        switch (status) {
+            case 'APPLICATION_SUBMITTED':
+                return 'bg-blue-100 text-blue-800';
+            case 'DOCUMENT_SCREENING':
+                return 'bg-purple-100 text-purple-800';
+            case 'FIRST_INTERVIEW':
+                return 'bg-yellow-100 text-yellow-800';
+            case 'SECOND_INTERVIEW':
+                return 'bg-yellow-100 text-yellow-800';
+            case 'OFFER_STAGE':
+                return 'bg-green-100 text-green-800';
+            case 'REJECTED':
+                return 'bg-red-100 text-red-800';
+            default:
+                return 'bg-gray-100 text-gray-800';
         }
-    }
+    };
+
 
     const getMatchColor = (score) => {
         if (score >= 85) return 'bg-green-500'

@@ -36,12 +36,15 @@ const CandidateProfilePage = () => {
     const decodedEmail = email ? decodeURIComponent(email) : '';
 
     const statusOptions = [
-        { value: 'SUBMITTED', label: 'Submitted', color: 'bg-gray-400' },
-        { value: 'REVIEWED', label: 'Reviewed', color: 'bg-blue-400' },
-        { value: 'INTERVIEW', label: 'Interview', color: 'bg-purple-400' },
-        { value: 'HIRED', label: 'Hired', color: 'bg-green-400' },
+        { value: 'APPLICATION_SUBMITTED', label: 'Submitted', color: 'bg-gray-400' },
+        { value: 'DOCUMENT_SCREENING', label: 'Reviewed', color: 'bg-blue-400' },
+        { value: 'FIRST_INTERVIEW', label: 'First Interview', color: 'bg-purple-300' },
+        { value: 'SECOND_INTERVIEW', label: 'Second Interview', color: 'bg-purple-400' },
+        { value: 'FINAL_INTERVIEW', label: 'Final Interview', color: 'bg-purple-500' },
+        { value: 'OFFER_STAGE', label: 'Offer Made', color: 'bg-green-400' },
         { value: 'REJECTED', label: 'Rejected', color: 'bg-red-400' }
     ];
+
 
     useEffect(() => {
         const fetchData = async () => {

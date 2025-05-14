@@ -12,6 +12,7 @@ import ReactMarkdown from 'react-markdown';
 import axiosInstance from '@/axios/axiosIntance';
 import { toast } from 'react-toastify';
 import { useUserProfile } from '@/context/useUserProfile';
+
 const JobSearchPage = () => {
   const primaryColor = '#3A6B4C';
   const [searchTerm, setSearchTerm] = useState('');
@@ -43,7 +44,7 @@ const JobSearchPage = () => {
       const response = await axiosInstance.get(`/job`);
       if (response.data && response.data.data && response.data.data.data) {
         setJobs(response.data.data.data);
-        // setAppliedIds(response.data.data.appliedJobIds);
+        console.log(response.data.data.data)
       }
     } catch (err) {
       setError(err.message || 'Failed to fetch jobs');
@@ -77,15 +78,15 @@ const JobSearchPage = () => {
   };
 
   const filteredJobs = jobs.filter(job => {
-    const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         job.employer.companyName.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesLocation = !filters.location || job.location.includes(filters.location);
-    const matchesType = !filters.jobType || job.jobType === filters.jobType;
-    const matchesStatus = job.status === filters.status;
+    // const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    //                      job.employer.companyName.toLowerCase().includes(searchTerm.toLowerCase());
+    // const matchesLocation = !filters.location || job.location.includes(filters.location);
+    // const matchesType = !filters.jobType || job.jobType === filters.jobType;
+    // const matchesStatus = job.status === filters.status;
     
-    if (activeTab === 'saved') return matchesSearch && matchesLocation && matchesType && matchesStatus && savedJobs.includes(job.id);
-    if (activeTab === 'applied') return matchesSearch && matchesLocation && matchesType && matchesStatus && appliedIds.includes(job.id);
-    return matchesSearch && matchesLocation && matchesType && matchesStatus;
+    // if (activeTab === 'saved') return matchesSearch && matchesLocation && matchesType && matchesStatus && savedJobs.includes(job.id);
+    // if (activeTab === 'applied') return matchesSearch && matchesLocation && matchesType && matchesStatus && appliedIds.includes(job.id);
+    return jobs;
   });
 
   const verifyIdentity = () => {
@@ -111,6 +112,13 @@ const JobSearchPage = () => {
       case 'FREELANCE': return 'Freelance';
       default: return type;
     }
+  };
+
+  const formatSalary = (job) => {
+    if (job.salaryMin && job.salaryMax) {
+      return `${job.salaryCurrency}${job.salaryMin} - ${job.salaryCurrency}${job.salaryMax} per ${job.salaryPeriod.toLowerCase()}`;
+    }
+    return job.salaryRange || 'Salary not specified';
   };
 
   const toggleSaveJob = (jobId) => {
@@ -186,35 +194,8 @@ const JobSearchPage = () => {
                 <DropdownMenuItem onClick={() => setFilters({...filters, location: 'Remote'})}>
                   Remote
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setFilters({...filters, location: 'San Francisco'})}>
-                  San Francisco
-                </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setFilters({...filters, location: 'New York'})}>
                   New York
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="gap-2 px-4 py-2 rounded-lg">
-                  <DollarSign className="h-4 w-4" />
-                  {filters.salaryRange || 'Salary'}
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="min-w-[200px] bg-white">
-                <DropdownMenuItem onClick={() => setFilters({...filters, salaryRange: ''})}>
-                  Any Salary
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setFilters({...filters, salaryRange: '$50,000+'})}>
-                  $50,000+
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setFilters({...filters, salaryRange: '$80,000+'})}>
-                  $80,000+
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setFilters({...filters, salaryRange: '$100,000+'})}>
-                  $100,000+
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -271,7 +252,7 @@ const JobSearchPage = () => {
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
                     <Briefcase className="h-5 w-5 text-gray-500" />
-                    <span className="text-gray-700">{selectedJob.employer.companyName}</span>
+                    <span className="text-gray-700">{selectedJob.employer.companyName.trim()}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-gray-500" />
@@ -296,7 +277,7 @@ const JobSearchPage = () => {
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-medium text-gray-600 mb-2">Salary</h3>
-                <p>{selectedJob.salaryRange}</p>
+                <p>{formatSalary(selectedJob)}</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-medium text-gray-600 mb-2">Posted</h3>
@@ -307,9 +288,18 @@ const JobSearchPage = () => {
             <div className="mb-8">
               <h3 className="text-xl font-semibold mb-4">Job Description</h3>
               <div className="prose max-w-none">
-                <ReactMarkdown>{selectedJob.description}</ReactMarkdown>
+                {selectedJob.description}
               </div>
             </div>
+
+            {selectedJob.requirements && (
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold mb-4">Requirements</h3>
+                <div className="prose max-w-none">
+                  {selectedJob.requirements}
+                </div>
+              </div>
+            )}
 
             {selectedJob.tags && (
               <div className="mb-8">
@@ -324,8 +314,21 @@ const JobSearchPage = () => {
               </div>
             )}
 
+            {selectedJob.benefits && selectedJob.benefits.length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold mb-4">Benefits</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedJob.benefits.map((benefit, index) => (
+                    <Badge key={index} variant="outline" className="text-sm font-normal py-1 px-3 capitalize">
+                      {benefit.replace(/_/g, ' ')}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="flex justify-end mt-6">
-              {appliedJobs.includes(selectedJob.id) ? (
+              {appliedIds.includes(selectedJob.id) ? (
                 <Button variant="outline" className="gap-2" disabled>
                   Applied
                 </Button>
@@ -364,6 +367,9 @@ const JobSearchPage = () => {
                           <CardTitle className="text-lg">{job.title}</CardTitle>
                           <div className="flex items-center gap-2 mt-1">
                             <p className="text-gray-700">{job.employer.companyName.trim()}</p>
+                            {job.visibility === 'PRIVATE' && (
+                              <Lock className="h-4 w-4 text-purple-600" />
+                            )}
                           </div>
                         </div>
                       </div>
@@ -384,18 +390,12 @@ const JobSearchPage = () => {
                       </Badge>
                       <Badge variant="outline" className="flex items-center gap-1 bg-blue-50 text-blue-800">
                         <DollarSign className="h-3 w-3" />
-                        {job.salaryRange}
+                        {formatSalary(job)}
                       </Badge>
                       <Badge variant="outline" className="flex items-center gap-1 bg-green-50 text-green-800">
                         <Briefcase className="h-3 w-3" />
                         {jobTypeDisplay(job.jobType)}
                       </Badge>
-                      {job.visibility === 'PRIVATE' && (
-                        <Badge variant="outline" className="flex items-center gap-1 bg-purple-50 text-purple-800">
-                          <Lock className="h-3 w-3" />
-                          Private
-                        </Badge>
-                      )}
                     </div>
                     
                     <p className="text-gray-600 mb-4 line-clamp-2">{job.description.substring(0, 150)}...</p>
@@ -434,7 +434,7 @@ const JobSearchPage = () => {
                           <ExternalLink className="h-4 w-4" />
                         </Button>
                         
-                        {appliedJobs.includes(job.id) ? (
+                        {appliedIds.includes(job.id) ? (
                           <Button variant="outline" className="gap-2" disabled>
                             Applied
                           </Button>
