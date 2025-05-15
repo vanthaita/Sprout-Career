@@ -1,10 +1,11 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { 
   Filter, 
   Briefcase,  MapPin, Clock, DollarSign, Bookmark, 
   MoreHorizontal,
   Download,
+  Plus,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -13,26 +14,28 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import axiosInstance from '@/axios/axiosIntance'
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const EmployeeCandidatesPage = () => {
   const [jobs, setJobs] = useState([])
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      setLoading(true)
-      try {
-        const res = await axiosInstance.get('/employer/jobs')
-        setJobs(res.data.data?.data || [])
-      } catch (error) {
-        console.error("Error fetching jobs:", error)
-      } finally {
-        setLoading(false)
-      }
+  const fetchJobs = useCallback(async () => {
+    setLoading(true)
+    try {
+      const res = await axiosInstance.get('/employer/jobs')
+      setJobs(res.data.data?.data || [])
+    } catch (error) {
+      console.error("Error fetching jobs:", error)
+    } finally {
+      setLoading(false)
     }
-    fetchJobs()
   }, [])
+
+  useEffect(() => {
+    fetchJobs()
+  }, [fetchJobs])
 
   const handleDeleteJob = async (jobId) => {
     try {
@@ -56,7 +59,7 @@ const EmployeeCandidatesPage = () => {
     router.push(`/en/dashboard/employer/job-posting/applications?jobId=${jobId}`)
   }
 
-  const formatSalaryRange = (job) => {
+  const formatSalaryRange = useCallback((job) => {
     if (!job) return "Not specified";
     if (job.salaryRange) return job.salaryRange;
   
@@ -68,9 +71,9 @@ const EmployeeCandidatesPage = () => {
     }
   
     return "Not specified";
-  }
+  }, [])
 
-  const formatDate = (dateString) => {
+  const formatDate = useCallback((dateString) => {
     if (!dateString) return ""
     const date = new Date(dateString)
     return date.toLocaleDateString('en-US', {
@@ -78,25 +81,43 @@ const EmployeeCandidatesPage = () => {
       month: 'short',
       day: 'numeric'
     })
-  }
+  }, [])
 
-  const renderTags = (tags) => {
+  const renderTags = useCallback((tags) => {
     if (!tags) return null
     return tags.split(',').map((tag, index) => (
       <Badge key={index} variant="outline" className="mr-2 mb-2">
         {tag.trim()}
       </Badge>
     ))
-  }
+  }, [])
 
-  const renderBenefits = (benefits) => {
+  const renderBenefits = useCallback((benefits) => {
     if (!benefits || benefits.length === 0) return null
     return benefits.map((benefit, index) => (
       <Badge key={index} variant="outline" className="mr-2 mb-2 capitalize">
         {benefit.replace(/_/g, ' ')}
       </Badge>
     ))
-  }
+  }, [])
+
+  const renderJobStatusBadge = useCallback((status) => {
+    const variant = status === "APPROVED" ? "default" :
+                  status === "PENDING" ? "secondary" :
+                  status === "REJECTED" ? "destructive" : "outline";
+    
+    const style = status === "APPROVED" ? { backgroundColor: '#3A6B4C', color: '#FFFFFF'} : {};
+    
+    return (
+      <Badge 
+        variant={variant}
+        style={style}
+        className={status !== "APPROVED" ? 'text-black' : ''}
+      >
+        {status ? status.charAt(0) + status.slice(1).toLowerCase() : ''}
+      </Badge>
+    )
+  }, [])
 
   return (
     <div className="min-h-screen">
@@ -108,8 +129,18 @@ const EmployeeCandidatesPage = () => {
             </div>
             <h1 className="text-lg font-semibold">Your Job Postings</h1>
           </div>
+
+          <div>
+            <Link href='/dashboard/employer/job-posting/new'>
+              <Button className='flex gap-1 bg-[#3A6B4C] text-white cursor-pointer'>
+                <Plus />
+                <span>New Job</span>
+              </Button>
+            </Link>
+          </div>
         </div>
       </header>
+      
       <div className="py-6 px-4 space-y-6">
         <Card>
           <CardHeader>
@@ -130,6 +161,7 @@ const EmployeeCandidatesPage = () => {
               </div>
             </div>
           </CardHeader>
+          
           <CardContent>
             {loading ? (
               <div className="flex justify-center items-center h-64">
@@ -149,7 +181,7 @@ const EmployeeCandidatesPage = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {jobs && jobs.length > 0 ? (
+                  {jobs.length > 0 ? (
                     jobs.map((job) => (
                       <TableRow key={job.id}>
                         <TableCell className="font-medium">{job.title}</TableCell>
@@ -159,17 +191,7 @@ const EmployeeCandidatesPage = () => {
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          <Badge 
-                            variant={
-                              job.status === "APPROVED" ? "default" :
-                              job.status === "PENDING" ? "secondary" :
-                              job.status === "REJECTED" ? "destructive" : "outline"
-                            }
-                            style={job.status === "APPROVED" ? { backgroundColor: '#3A6B4C', color: '#FFFFFF'} : {}}
-                            className='text-black'
-                          >
-                            {job.status ? job.status.charAt(0) + job.status.slice(1).toLowerCase() : ''}
-                          </Badge>
+                          {renderJobStatusBadge(job.status)}
                         </TableCell>
                         <TableCell>{job.location}</TableCell>
                         <TableCell>{formatSalaryRange(job)}</TableCell>
@@ -181,7 +203,7 @@ const EmployeeCandidatesPage = () => {
                                 <MoreHorizontal className="h-4 w-4" />
                               </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end"  className='bg-white'>
+                            <DropdownMenuContent align="end" className='bg-white'>
                               <DropdownMenuItem onClick={() => openViewDialog(job)}>
                                 View Details
                               </DropdownMenuItem>
@@ -210,6 +232,7 @@ const EmployeeCandidatesPage = () => {
               </Table>
             )}
           </CardContent>
+          
           <CardFooter className="flex justify-between">
             <div className="text-sm text-muted-foreground">
               Showing {jobs.length} of {jobs.length} jobs
@@ -224,12 +247,19 @@ const EmployeeCandidatesPage = () => {
             </div>
           </CardFooter>
         </Card>
+        
+        <div className="mb-6">
+          <h2 className="ml-1 text-2xl font-semibold tracking-tight">
+            Job Postings Overview
+          </h2>
+        </div>
+        
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#3A6B4C]"></div>
           </div>
         ) : jobs.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             {jobs.map(job => (
               <Card 
                 key={job.id} 
@@ -245,16 +275,7 @@ const EmployeeCandidatesPage = () => {
                         </div>
                       </CardDescription>
                     </div>
-                    <Badge 
-                      variant={
-                        job.status === "APPROVED" ? "default" :
-                        job.status === "PENDING" ? "secondary" :
-                        job.status === "REJECTED" ? "destructive" : "outline"
-                      }
-                      style={job.status === "APPROVED" ? { backgroundColor: '#3A6B4C', color: '#FFFFFF'} : {}}
-                    >
-                      {job.status}
-                    </Badge>
+                    {renderJobStatusBadge(job.status)}
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -290,8 +311,8 @@ const EmployeeCandidatesPage = () => {
                     Posted: {formatDate(job.postedDate)}
                   </span>
                   <Button 
-                    size="sm" 
                     variant="outline"
+                    className='cursor-pointer bg-[#3A6B4C] text-white'
                     onClick={() => navigateToApplications(job.id)}
                   >
                     View Candidates
@@ -314,4 +335,4 @@ const EmployeeCandidatesPage = () => {
   )
 }
 
-export default EmployeeCandidatesPage;
+export default EmployeeCandidatesPage

@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -14,9 +14,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Globe, Lock, CircleDollarSign, Tags, AlertCircle, StickyNote } from 'lucide-react'
+import { Globe, Lock, CircleDollarSign, Tags, AlertCircle, StickyNote, Home } from 'lucide-react'
 import MDEditor from '@uiw/react-md-editor'
 import axiosInstance from '@/axios/axiosIntance'
+import Link from 'next/link'
 
 const JobPostingForm = () => {
   const router = useRouter()
@@ -40,8 +41,92 @@ const JobPostingForm = () => {
   const [loading, setLoading] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
+  // Memoized constants
+  const salaryCurrencies = useMemo(() => [
+    { value: 'USD', label: '$ USD' },
+    { value: 'EUR', label: '€ EUR' },
+    { value: 'GBP', label: '£ GBP' },
+    { value: 'JPY', label: '¥ JPY' },
+    { value: 'CAD', label: 'CA$ CAD' },
+    { value: 'AUD', label: 'AU$ AUD' }
+  ], [])
 
-  const fetchJob = async (id) => {
+  const salaryPeriods = useMemo(() => [
+    { value: 'HOUR', label: 'per hour' },
+    { value: 'DAY', label: 'per day' },
+    { value: 'WEEK', label: 'per week' },
+    { value: 'MONTH', label: 'per month' },
+    { value: 'YEAR', label: 'per year' },
+    { value: 'PROJECT', label: 'per project' }
+  ], [])
+
+  const jobTypes = useMemo(() => [
+    { value: 'FULL_TIME', label: 'Full-time' },
+    { value: 'PART_TIME', label: 'Part-time' },
+    { value: 'CONTRACT', label: 'Contract' },
+    { value: 'INTERNSHIP', label: 'Internship' },
+    { value: 'TEMPORARY', label: 'Temporary' }
+  ], [])
+
+  const benefitsOptions = useMemo(() => [
+    { id: '401k', label: '💰 401(k)', icon: <CircleDollarSign className="h-4 w-4" /> },
+    { id: 'distributed_team', label: '🌎 Distributed team' },
+    { id: 'async', label: '⏰ Async' },
+    { id: 'vision_insurance', label: '🤓 Vision insurance' },
+    { id: 'dental_insurance', label: '🦷 Dental insurance' },
+    { id: 'medical_insurance', label: '🚑 Medical insurance' },
+    { id: 'unlimited_vacation', label: '🏖 Unlimited vacation' },
+    { id: 'paid_time_off', label: '🏖 Paid time off' },
+    { id: '4day_workweek', label: '📆 4 day workweek' },
+    { id: '401k_matching', label: '💰 401k matching' },
+    { id: 'company_retreats', label: '🏔 Company retreats' },
+    { id: 'coworking_budget', label: '🏬 Coworking budget' },
+    { id: 'learning_budget', label: '📚 Learning budget' },
+    { id: 'gym_membership', label: '💪 Free gym membership' },
+    { id: 'wellness_budget', label: '🧘 Mental wellness budget' },
+    { id: 'home_office_budget', label: '🖥 Home office budget' },
+    { id: 'crypto_pay', label: '🥧 Pay in crypto' },
+    { id: 'pseudonymous', label: '🥸 Pseudonymous' },
+    { id: 'profit_sharing', label: '💰 Profit sharing' },
+    { id: 'equity', label: '💰 Equity compensation' },
+    { id: 'no_whiteboard', label: '⬜️ No whiteboard interview' },
+    { id: 'no_monitoring', label: '👀 No monitoring system' },
+    { id: 'no_politics', label: '🚫 No politics at work' },
+    { id: 'age_inclusive', label: '🎅 We hire old (and young)' }
+  ], [])
+
+  const popularTags = useMemo(() => [
+    'JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 
+    'Django', 'Ruby', 'Rails', 'Java', 'Spring', 'Kotlin', 
+    'Swift', 'iOS', 'Android', 'Flutter', 'Go', 'Rust', 
+    'PHP', 'Laravel', 'C#', '.NET', 'SQL', 'PostgreSQL', 
+    'MongoDB', 'Redis', 'AWS', 'Azure', 'GCP', 'Docker', 
+    'Kubernetes', 'Terraform', 'Git', 'CI/CD', 'DevOps', 
+    'Frontend', 'Backend', 'Fullstack', 'Mobile', 'Blockchain', 
+    'Crypto', 'Web3', 'Solidity', 'AI', 'Machine Learning', 
+    'Data Science', 'Analytics', 'Product', 'Design', 'UI/UX', 
+    'Marketing', 'Sales', 'Finance', 'HR', 'Remote', 
+    'Hybrid', 'Onsite', 'Entry Level', 'Senior', 'Lead'
+  ], [])
+
+  const primaryTags = useMemo(() => [
+    'Engineering', 'Product', 'Design', 'Marketing', 
+    'Sales', 'Customer Support', 'Data Science', 
+    'DevOps', 'Security', 'Finance', 'HR', 
+    'Operations', 'Education', 'Healthcare', 
+    'Legal', 'Other'
+  ], [])
+
+  const popularLocations = useMemo(() => [
+    'Remote', 'Remote (US)', 'Remote (EU)', 'Remote (Global)',
+    'New York, NY', 'San Francisco, CA', 'Los Angeles, CA',
+    'Chicago, IL', 'Austin, TX', 'Seattle, WA', 'Boston, MA',
+    'London, UK', 'Berlin, Germany', 'Paris, France',
+    'Amsterdam, Netherlands', 'Tokyo, Japan', 'Singapore',
+    'Sydney, Australia', 'Toronto, Canada', 'Vancouver, Canada'
+  ], [])
+
+  const fetchJob = useCallback(async (id) => {
     try {
       setLoading(true)
       const response = await axiosInstance.get(`/employer/jobs/${id}`)
@@ -73,111 +158,24 @@ const JobPostingForm = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
+
   useEffect(() => {
     if (jobId) {
       setIsEditing(true)
       fetchJob(jobId)
     }
-  }, [jobId])
+  }, [jobId, fetchJob])
 
-  
-
-  
-
-  const salaryCurrencies = [
-    { value: 'USD', label: '$ USD' },
-    { value: 'EUR', label: '€ EUR' },
-    { value: 'GBP', label: '£ GBP' },
-    { value: 'JPY', label: '¥ JPY' },
-    { value: 'CAD', label: 'CA$ CAD' },
-    { value: 'AUD', label: 'AU$ AUD' }
-  ]
-
-  const salaryPeriods = [
-    { value: 'HOUR', label: 'per hour' },
-    { value: 'DAY', label: 'per day' },
-    { value: 'WEEK', label: 'per week' },
-    { value: 'MONTH', label: 'per month' },
-    { value: 'YEAR', label: 'per year' },
-    { value: 'PROJECT', label: 'per project' }
-  ]
-
-  const jobTypes = [
-    { value: 'FULL_TIME', label: 'Full-time' },
-    { value: 'PART_TIME', label: 'Part-time' },
-    { value: 'CONTRACT', label: 'Contract' },
-    { value: 'INTERNSHIP', label: 'Internship' },
-    { value: 'TEMPORARY', label: 'Temporary' }
-  ]
-
-  const benefitsOptions = [
-    { id: '401k', label: '💰 401(k)', icon: <CircleDollarSign className="h-4 w-4" /> },
-    { id: 'distributed_team', label: '🌎 Distributed team' },
-    { id: 'async', label: '⏰ Async' },
-    { id: 'vision_insurance', label: '🤓 Vision insurance' },
-    { id: 'dental_insurance', label: '🦷 Dental insurance' },
-    { id: 'medical_insurance', label: '🚑 Medical insurance' },
-    { id: 'unlimited_vacation', label: '🏖 Unlimited vacation' },
-    { id: 'paid_time_off', label: '🏖 Paid time off' },
-    { id: '4day_workweek', label: '📆 4 day workweek' },
-    { id: '401k_matching', label: '💰 401k matching' },
-    { id: 'company_retreats', label: '🏔 Company retreats' },
-    { id: 'coworking_budget', label: '🏬 Coworking budget' },
-    { id: 'learning_budget', label: '📚 Learning budget' },
-    { id: 'gym_membership', label: '💪 Free gym membership' },
-    { id: 'wellness_budget', label: '🧘 Mental wellness budget' },
-    { id: 'home_office_budget', label: '🖥 Home office budget' },
-    { id: 'crypto_pay', label: '🥧 Pay in crypto' },
-    { id: 'pseudonymous', label: '🥸 Pseudonymous' },
-    { id: 'profit_sharing', label: '💰 Profit sharing' },
-    { id: 'equity', label: '💰 Equity compensation' },
-    { id: 'no_whiteboard', label: '⬜️ No whiteboard interview' },
-    { id: 'no_monitoring', label: '👀 No monitoring system' },
-    { id: 'no_politics', label: '🚫 No politics at work' },
-    { id: 'age_inclusive', label: '🎅 We hire old (and young)' }
-  ]
-
-  const popularTags = [
-    'JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 
-    'Django', 'Ruby', 'Rails', 'Java', 'Spring', 'Kotlin', 
-    'Swift', 'iOS', 'Android', 'Flutter', 'Go', 'Rust', 
-    'PHP', 'Laravel', 'C#', '.NET', 'SQL', 'PostgreSQL', 
-    'MongoDB', 'Redis', 'AWS', 'Azure', 'GCP', 'Docker', 
-    'Kubernetes', 'Terraform', 'Git', 'CI/CD', 'DevOps', 
-    'Frontend', 'Backend', 'Fullstack', 'Mobile', 'Blockchain', 
-    'Crypto', 'Web3', 'Solidity', 'AI', 'Machine Learning', 
-    'Data Science', 'Analytics', 'Product', 'Design', 'UI/UX', 
-    'Marketing', 'Sales', 'Finance', 'HR', 'Remote', 
-    'Hybrid', 'Onsite', 'Entry Level', 'Senior', 'Lead'
-  ]
-
-  const primaryTags = [
-    'Engineering', 'Product', 'Design', 'Marketing', 
-    'Sales', 'Customer Support', 'Data Science', 
-    'DevOps', 'Security', 'Finance', 'HR', 
-    'Operations', 'Education', 'Healthcare', 
-    'Legal', 'Other'
-  ]
-
-  const popularLocations = [
-    'Remote', 'Remote (US)', 'Remote (EU)', 'Remote (Global)',
-    'New York, NY', 'San Francisco, CA', 'Los Angeles, CA',
-    'Chicago, IL', 'Austin, TX', 'Seattle, WA', 'Boston, MA',
-    'London, UK', 'Berlin, Germany', 'Paris, France',
-    'Amsterdam, Netherlands', 'Tokyo, Japan', 'Singapore',
-    'Sydney, Australia', 'Toronto, Canada', 'Vancouver, Canada'
-  ]
-
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
       [name]: value
     }))
-  }
+  }, [])
 
-  const handleNumberChange = (e) => {
+  const handleNumberChange = useCallback((e) => {
     const { name, value } = e.target
     if (value === '' || /^[0-9\b]+$/.test(value)) {
       setFormData(prev => ({
@@ -185,23 +183,23 @@ const JobPostingForm = () => {
         [name]: value
       }))
     }
-  }
+  }, [])
 
-  const handleDescriptionChange = (value) => {
+  const handleDescriptionChange = useCallback((value) => {
     setFormData(prev => ({
       ...prev,
       description: value || ''
     }))
-  }
+  }, [])
 
-  const handleRequirementsChange = (value) => {
+  const handleRequirementsChange = useCallback((value) => {
     setFormData(prev => ({
       ...prev,
       requirements: value || ''
     }))
-  }
+  }, [])
 
-  const handleBenefitsChange = (benefitId) => {
+  const handleBenefitsChange = useCallback((benefitId) => {
     setFormData(prev => {
       const currentBenefits = [...prev.benefits]
       const index = currentBenefits.indexOf(benefitId)
@@ -216,16 +214,16 @@ const JobPostingForm = () => {
         benefits: currentBenefits
       }
     })
-  }
+  }, [])
 
-  const handleVisibilityChange = (value) => {
+  const handleVisibilityChange = useCallback((value) => {
     setFormData(prev => ({
       ...prev,
       visibility: value
     }))
-  }
+  }, [])
 
-  const handleTagSelect = (tag) => {
+  const handleTagSelect = useCallback((tag) => {
     setFormData(prev => {
       const currentTags = prev.tags ? prev.tags.split(',') : []
       
@@ -242,9 +240,9 @@ const JobPostingForm = () => {
         }
       }
     })
-  }
+  }, [])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault()
     try {
         setLoading(true)
@@ -257,7 +255,7 @@ const JobPostingForm = () => {
             ...formData,
             salaryRange
         }
-        console.log(dataToSubmit);
+
         if (isEditing) {
             await axiosInstance.put(`/employer/jobs/${jobId}`, dataToSubmit)
             toast.success('Job updated successfully')
@@ -273,10 +271,10 @@ const JobPostingForm = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [formData, isEditing, jobId, router, salaryPeriods])
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <header className="bg-white border-b">
         <div className="flex h-16 items-center justify-between px-4 md:px-6">
           <div className="flex items-center gap-3">
@@ -286,6 +284,14 @@ const JobPostingForm = () => {
             <h1 className="text-lg font-semibold">
               {isEditing ? 'Edit Job Posting' : 'Create New Job Posting'}
             </h1>
+          </div>
+          <div>
+            <Link href='/dashboard/employer/job-posting'>
+              <Button className='cursor-pointer'>
+                <Home /> 
+                <span>Home</span>
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
@@ -318,7 +324,7 @@ const JobPostingForm = () => {
             <Label className="text-gray-700">Primary Tag (Category)</Label>
             <Select 
               value={formData.primaryTag} 
-              onValueChange={(value) => setFormData({...formData, primaryTag: value})}
+              onValueChange={(value) => setFormData(prev => ({...prev, primaryTag: value}))}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select primary category" />
@@ -380,8 +386,8 @@ const JobPostingForm = () => {
             <div className="space-y-2">
               <Label className="text-gray-700">Job Type</Label>
               <Select 
-                value={formData.type} 
-                onValueChange={(value) => setFormData({...formData, jobType: value})}
+                value={formData.jobType} 
+                onValueChange={(value) => setFormData(prev => ({...prev, jobType: value}))}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select job type" />
@@ -400,7 +406,7 @@ const JobPostingForm = () => {
               <Label htmlFor="location" className="text-gray-700">Location</Label>
               <Select
                 value={formData.location}
-                onValueChange={(value) => setFormData({...formData, location: value})}
+                onValueChange={(value) => setFormData(prev => ({...prev, location: value}))}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select or type a location" />
@@ -431,7 +437,7 @@ const JobPostingForm = () => {
                 <Label htmlFor="salaryCurrency" className="text-xs text-gray-600">Currency</Label>
                 <Select 
                   value={formData.salaryCurrency} 
-                  onValueChange={(value) => setFormData({...formData, salaryCurrency: value})}
+                  onValueChange={(value) => setFormData(prev => ({...prev, salaryCurrency: value}))}
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select currency" />
@@ -474,7 +480,7 @@ const JobPostingForm = () => {
                 <Label htmlFor="salaryPeriod" className="text-xs text-gray-600">Period</Label>
                 <Select 
                   value={formData.salaryPeriod} 
-                  onValueChange={(value) => setFormData({...formData, salaryPeriod: value})}
+                  onValueChange={(value) => setFormData(prev => ({...prev, salaryPeriod: value}))}
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select period" />
