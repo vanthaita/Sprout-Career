@@ -22,7 +22,6 @@ const OnboardingPage = () => {
   const router = useRouter();
   const [userType, setUserType] = useState('candidate')
   const [dateOfBirth, setDateOfBirth] = useState('')
-  const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [candidateData, setCandidateData] = useState({
     fullName: '',
@@ -47,24 +46,24 @@ const OnboardingPage = () => {
     foundedYear: ''
   })
   
-  useEffect(() => {
-    const checkIsOnboarded = async () => {
-      try {
-        setLoading(true)
-        const { data: res } = await axiosInstance.get('/users/check-isOnboarded');
-        const { isOnboarded, userType } = res.data;
-        if (isOnboarded) {
-          router.push(`/dashboard/${userType.toLowerCase()}`);
-        }
-      } catch (error) {
-        console.error('Failed to check onboarding status', error);
-      } finally {
-        setLoading(false)
-      }
-    };
+  // useEffect(() => {
+  //   const checkIsOnboarded = async () => {
+  //     try {
+  //       setLoading(true)
+  //       const { data: res } = await axiosInstance.get('/users/check-isOnboarded');
+  //       const { isOnboarded, userType } = res.data;
+  //       if (isOnboarded) {
+  //         router.push(`/dashboard/${userType.toLowerCase()}`);
+  //       }
+  //     } catch (error) {
+  //       console.error('Failed to check onboarding status', error);
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   };
     
-    checkIsOnboarded();
-  }, [router]);
+  //   checkIsOnboarded();
+  // }, [router]);
 
   const handleCandidateSubmit = async (e) => {
     e.preventDefault();
@@ -137,7 +136,6 @@ const OnboardingPage = () => {
         CompanyDesc: employerData.companyDescription,
       });
       
-      await axiosInstance.patch('/users/update-onboarding');
       router.push('/dashboard/employee');
     } catch(error) {
       console.error('Error during profile submission:', error);
@@ -146,13 +144,13 @@ const OnboardingPage = () => {
     }
   }
   
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="h-12 w-12 animate-spin text-primary" />
-      </div>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen">
+  //       <Loader2 className="h-12 w-12 animate-spin text-primary" />
+  //     </div>
+  //   )
+  // }
 
   const handleCandidateChange = (e) => {
     setCandidateData({
