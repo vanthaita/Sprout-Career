@@ -2,7 +2,7 @@ import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 import { NextResponse } from 'next/server';
 
-const privatePath = ['/in'];
+const privatePath = ['/dashboard'];
 const authPath = ['/signin', '/signup'];
 
 const intlMiddleware = createMiddleware(routing);

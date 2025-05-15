@@ -5,55 +5,69 @@ import { Label } from '@/components/ui/label'
 import { FcGoogle } from 'react-icons/fc'
 import React from 'react'
 import Link from 'next/link'
-import { FaLinkedin } from 'react-icons/fa'
+import { Mail, Lock, ChevronRight, ArrowRight, User } from 'lucide-react'
 
 const SignUp = () => {
   return (
-    <section className='h-screen flex justify-center items-center '>
-      <Card className='p-8 w-full max-w-md space-y-6 bg-white/30'>
+    <div className='h-screen flex justify-center items-center '>
+      <Card className='p-8 w-full max-w-md space-y-6 border-none shadow-none'>
         <div className='flex flex-col items-center gap-y-4'>
+          <h1 className="text-2xl font-bold">Create an account</h1>
           <p className='text-sm text-gray-500'>Sign Up to your account</p>
         </div>
         
         <div className='space-y-4'>
           <div className='space-y-2'>
             <Label htmlFor='email'>Email</Label>
-            <Input 
-              id='email'
-              type='email'
-              placeholder='example@email.com'
-            />
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input 
+                id='email'
+                type='email'
+                placeholder='example@email.com'
+                className="pl-10"
+              />
+            </div>
           </div>
 
           <div className='space-y-2'>
             <div className='flex justify-between items-center'>
               <Label htmlFor='password'>Password</Label>
-              <a href='#' className='text-sm text-primary hover:underline'>Forgot password?</a>
+              <a href='#' className='text-sm text-primary hover:underline flex items-center'>
+                Forgot password? <ChevronRight className="h-4 w-4" />
+              </a>
             </div>
-            <Input 
-              id='password'
-              type='password'
-              placeholder='••••••••'
-            />
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input 
+                id='password'
+                type='password'
+                placeholder='••••••••'
+                className="pl-10"
+              />
+            </div>
           </div>
+
           <div className='space-y-2'>
             <div className='flex justify-between items-center'>
               <Label htmlFor='confirm-password'>Confirm Password</Label>
             </div>
-            <Input 
-              id='confirm-password'
-              type='password'
-              placeholder='••••••••'
-            />
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input 
+                id='confirm-password'
+                type='password'
+                placeholder='••••••••'
+                className="pl-10"
+              />
+            </div>
           </div>
-          <Button className='w-full'>
-            Sign Up
+
+          <Button className='w-full flex items-center gap-2'>
+            Sign Up <ArrowRight className="h-4 w-4" />
           </Button>
           
           <div className='relative'>
-            <div className='absolute inset-0 flex items-center'>
-              <span className='w-full border-t' />
-            </div>
             <div className='relative flex justify-center text-xs uppercase'>
               <span className='bg-background px-2 text-muted-foreground'>
                 Or continue with
@@ -62,25 +76,28 @@ const SignUp = () => {
           </div>
           
           <div className='flex justify-center w-full items-center gap-x-2'>
-              <Button variant='outline' className='w-1/2 gap-x-2'>
-                <FcGoogle className='h-4 w-4' />
-                Google
-              </Button>
-              <Button variant='outline' className='w-1/2 gap-x-2 text-blue-400'>
-                <FaLinkedin className='h-4 w-4' />
-                Linkedin
-              </Button>
-            </div>
+            <Button variant='outline' className='w-full gap-x-2'>
+              <FcGoogle className='h-4 w-4' />
+              Google
+            </Button>
+            {/* <Button variant='outline' className='w-1/2 gap-x-2 text-blue-400'>
+              <FaLinkedin className='h-4 w-4' />
+              Linkedin
+            </Button> */}
+          </div>
         </div>
         
         <div className='text-center text-sm'>
-          Don&apos;t have an account?{' '}
-          <Link href='/signup' className='text-primary hover:underline'>
+          Already have an account?{' '}
+          <Link href='/signin' className='text-primary hover:underline'>
             Sign In
           </Link>
         </div>
       </Card>
-    </section>
+      <div className="absolute bottom-4 left-4 z-10 text-sm">
+        ©2025. All Rights Reserved. Sprout Vietnam.
+      </div>
+    </div>
   )
 }
 
