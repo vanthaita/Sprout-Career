@@ -3,63 +3,70 @@ import React from 'react';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
 import { Sprout, Leaf } from 'lucide-react';
-import { useLanguage } from '@/hook/useLanguage ';
 
 const TopJobSection = () => {
-  const { t } = useLanguage("jobs");
   const currentDate = new Date().toISOString().split('T')[0];
 
   const mockDataJobs = [
     {
       id: 1,
-      company: "Timee",
-      location: "Tokyo",
-      title: "エンジニアリングリード / Engineering Lead",
+      company: "TechCorp",
+      location: "San Francisco, CA",
+      title: "Engineering Lead",
       tags: [
-        t("tagTypes.required"),
-        t("tagTypes.residentsOnly"),
-        t("tagTypes.salaryRange", { min: 7.8, max: 14 })
+        "Full-time",
+        "On-site",
+        "$120k - $160k"
       ],
-      logoUrl: "https://japan-dev.com/cdn/company_logos/timee.png", 
-      isNew: true
+      jobType: "FULL_TIME",
+      logoUrl: "https://example.com/techcorp-logo.png",
+      postedDate: new Date(),
+      status: "APPROVED"
     },
     {
       id: 2,
-      company: "Money Forward",
-      location: "Tokyo",
-      title: "Corporate Security Division Manager (CISO Office)",
+      company: "DataSystems",
+      location: "Remote",
+      title: "Senior Frontend Developer",
       tags: [
-        t("tagTypes.required"),
-        t("filters.applyOverseas"),
-        t("tagTypes.salaryRange", { min: 11, max: 15 })
+        "Remote",
+        "Contract",
+        "$70 - $90/hr"
       ],
-      logoUrl: "https://japan-dev.com/cdn/company_logos/money-forward.png",
-      isNew: true
+      jobType: "CONTRACT",
+      logoUrl: "https://example.com/datasystems-logo.png",
+      postedDate: new Date(),
+      status: "APPROVED"
     },
     {
       id: 3,
-      company: "Rakuten",
-      location: "Tokyo",
-      title: "Senior Front-end Engineer",
+      company: "CloudNine",
+      location: "New York, NY",
+      title: "DevOps Engineer",
       tags: [
-        t("filters.applyOverseas"),
-        t("tagTypes.salaryRange", { min: 6, max: 9 }),
-        t("tagTypes.remote")
+        "Full-time",
+        "Hybrid",
+        "$130k - $170k"
       ],
-      logoUrl: "https://japan-dev.com/cdn/company_logos/rakuten.png",
-      isNew: true
+      jobType: "FULL_TIME",
+      logoUrl: "https://example.com/cloudnine-logo.png",
+      postedDate: new Date(),
+      status: "APPROVED"
     },
     {
       id: 4,
-      company: "TableCheck",
-      location: "Tokyo",
-      title: "Backend Developer - Elixir (Remote)",
+      company: "AI Innovations",
+      location: "Boston, MA",
+      title: "Machine Learning Specialist",
       tags: [
-        t("filters.applyOverseas"),
-        t("tagTypes.fullRemote")
+        "Full-time",
+        "On-site",
+        "$140k - $190k"
       ],
-      logoUrl: "https://japan-dev.com/cdn/company_logos/tablecheck.png",
-      isNew: true
+      jobType: "FULL_TIME",
+      logoUrl: "https://example.com/ai-innovations-logo.png",
+      postedDate: new Date(),
+      status: "APPROVED"
     }
   ];
 
@@ -71,19 +78,19 @@ const TopJobSection = () => {
             <div className='inline-flex items-center gap-3 mb-4'>
               <Sprout className='h-8 w-8 text-[#3A6B4C]' />
               <h2 className='text-3xl font-serif font-bold text-[#2B463C]'>
-                {t("title")}
+                Latest Job Opportunities
               </h2>
             </div>
             <p className='text-[#554640]/90'>
-              {t("subtitle", { date: currentDate })}
+              Updated as of {currentDate}
             </p>
           </div>
 
           <div className='flex flex-wrap justify-center gap-3 w-full max-w-2xl'>
             {[
-              t("filters.noJapanese"),
-              t("filters.applyOverseas"), 
-              t("filters.remoteOptions")
+              "Remote",
+              "Full-time", 
+              "Contract"
             ].map((filter, index) => (
               <Button 
                 key={index}
@@ -112,7 +119,7 @@ const TopJobSection = () => {
                   <div className="flex-grow min-w-0">
                     <div className="text-sm text-[#554640]/80 mb-1.5">
                       <span className="font-medium">{job.company}</span>
-                      <span className="mx-2">{t("locationSeparator")}</span>
+                      <span className="mx-2">•</span>
                       <span>{job.location}</span>
                     </div>
 
@@ -125,8 +132,8 @@ const TopJobSection = () => {
                         <span
                           key={index}
                           className={`px-3 py-1 rounded-full text-sm ${
-                            tag.includes(t("tagTypes.required")) || 
-                            tag.includes(t("tagTypes.residentsOnly"))
+                            tag.includes("Full-time") || 
+                            tag.includes("On-site")
                               ? 'bg-[#3A6B4C]/10 text-[#3A6B4C] border border-[#3A6B4C]/20'
                               : ''
                           }`}
@@ -146,7 +153,7 @@ const TopJobSection = () => {
             className="mt-8 bg-[#3A6B4C] hover:bg-[#2E5540] text-white rounded-full px-8 py-6"
           >
             <Leaf className="mr-2 h-5 w-5" />
-            {t("cta")}
+            View All Jobs
           </Button>
         </div>
       </div>

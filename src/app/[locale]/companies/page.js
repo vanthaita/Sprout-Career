@@ -14,7 +14,7 @@ const CompaniesPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [filters, setFilters] = useState({
     location: '',
-    size: '',
+    companySize: '',
     industry: '',
     visaSponsorship: false
   })
@@ -22,25 +22,39 @@ const CompaniesPage = () => {
   const mockCompanies = [
     {
       id: 1,
-      name: 'SmartNews',
-      logo: 'https://japan-dev.com/cdn/company_logos/tablecheck.png',
-      location: 'Tokyo',
-      description: 'AI-powered news aggregation platform',
-      size: '501-1000',
+      companyName: 'SmartNews',
+      companyLogoUrl: 'https://japan-dev.com/cdn/company_logos/tablecheck.png',
+      address: 'Tokyo, Japan',
+      companyDesc: 'AI-powered news aggregation platform',
+      companySize: '501-1000',
       industry: 'Media',
       visa: true,
-      benefits: ['Flex hours', 'Stock options', 'Remote work']
+      benefits: ['Flex hours', 'Stock options', 'Remote work'],
+      foundedYear: '2012',
+      companyUrl: 'https://www.smartnews.com'
     },
-    // ... other mock companies
+    {
+      id: 2,
+      companyName: 'TableCheck',
+      companyLogoUrl: 'https://japan-dev.com/cdn/company_logos/tablecheck.png',
+      address: 'Tokyo, Japan',
+      companyDesc: 'Restaurant reservation management system',
+      companySize: '51-200',
+      industry: 'Hospitality',
+      visa: true,
+      benefits: ['Flex hours', 'Remote work', 'Health insurance'],
+      foundedYear: '2010',
+      companyUrl: 'https://www.tablecheck.com'
+    },
   ]
 
   const filteredCompanies = mockCompanies.filter(company => {
-    const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      company.description.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesSearch = company.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      company.companyDesc.toLowerCase().includes(searchTerm.toLowerCase())
     
     const matchesFilters = (
-      (!filters.location || company.location === filters.location) &&
-      (!filters.size || company.size === filters.size) &&
+      (!filters.location || company.address.includes(filters.location)) &&
+      (!filters.companySize || company.companySize === filters.companySize) &&
       (!filters.industry || company.industry === filters.industry) &&
       (!filters.visaSponsorship || company.visa)
     )
@@ -97,12 +111,14 @@ const CompaniesPage = () => {
               <SelectContent>
                 <SelectItem value="Tokyo">Tokyo</SelectItem>
                 <SelectItem value="Osaka">Osaka</SelectItem>
+                <SelectItem value="Kyoto">Kyoto</SelectItem>
+                <SelectItem value="Fukuoka">Fukuoka</SelectItem>
               </SelectContent>
             </Select>
 
             <Select
-              value={filters.size}
-              onValueChange={(value) => setFilters({...filters, size: value})}
+              value={filters.companySize}
+              onValueChange={(value) => setFilters({...filters, companySize: value})}
             >
               <SelectTrigger className="w-[180px] focus:ring-[#3A6B4C]">
                 <SelectValue placeholder="Company Size" />
@@ -110,6 +126,25 @@ const CompaniesPage = () => {
               <SelectContent>
                 <SelectItem value="1-50">Startup (1-50)</SelectItem>
                 <SelectItem value="51-200">Medium (51-200)</SelectItem>
+                <SelectItem value="201-500">Large (201-500)</SelectItem>
+                <SelectItem value="501-1000">Enterprise (501-1000)</SelectItem>
+                <SelectItem value="1000+">Corporation (1000+)</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={filters.industry}
+              onValueChange={(value) => setFilters({...filters, industry: value})}
+            >
+              <SelectTrigger className="w-[180px] focus:ring-[#3A6B4C]">
+                <SelectValue placeholder="Industry" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Media">Media</SelectItem>
+                <SelectItem value="Technology">Technology</SelectItem>
+                <SelectItem value="Finance">Finance</SelectItem>
+                <SelectItem value="Hospitality">Hospitality</SelectItem>
+                <SelectItem value="E-commerce">E-commerce</SelectItem>
               </SelectContent>
             </Select>
 
@@ -132,7 +167,7 @@ const CompaniesPage = () => {
               variant="outline"
               onClick={() => setFilters({
                 location: '',
-                size: '',
+                companySize: '',
                 industry: '',
                 visaSponsorship: false
               })}
@@ -149,24 +184,35 @@ const CompaniesPage = () => {
           {filteredCompanies.map(company => (
             <Card
               key={company.id}
-              className="p-6 hover:shadow-lg transition-all duration-300 "
+              className="p-6 hover:shadow-lg transition-all duration-300"
             >
               <div className="flex items-start gap-4 mb-4">
                 <img 
-                  src={company.logo} 
-                  alt={company.name}
-                  className="w-16 h-16 object-contain  p-1.5"
+                  src={company.companyLogoUrl} 
+                  alt={company.companyName}
+                  className="w-16 h-16 object-contain p-1.5"
                 />
                 <div className="space-y-1">
-                  <h3 className="text-xl font-serif font-bold text-[#2B463C]">{company.name}</h3>
+                  <h3 className="text-xl font-serif font-bold text-[#2B463C]">{company.companyName}</h3>
                   <div className="flex items-center gap-2">
                     <Globe className="w-4 h-4 text-[#554640]/80" />
-                    <span className="text-[#554640]/80">{company.location}</span>
+                    <span className="text-[#554640]/80">{company.address}</span>
                   </div>
+                  {company.companyUrl && (
+                    <a 
+                      href={company.companyUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-sm text-[#3A6B4C] hover:underline flex items-center gap-1"
+                    >
+                      <Globe className="w-3 h-3" />
+                      Company Website
+                    </a>
+                  )}
                 </div>
               </div>
               
-              <p className="text-[#554640]/90 mb-4">{company.description}</p>
+              <p className="text-[#554640]/90 mb-4">{company.companyDesc}</p>
               
               <div className="flex flex-wrap gap-2 mb-4">
                 {company.benefits.map((benefit, index) => (
@@ -180,8 +226,11 @@ const CompaniesPage = () => {
                 ))}
               </div>
 
-              <div className="flex items-center justify-between text-sm text-[#554640]/80">
-                <span>{company.size} employees</span>
+              <div className="flex flex-wrap items-center justify-between text-sm text-[#554640]/80 gap-2">
+                <span>{company.companySize} employees</span>
+                {company.foundedYear && (
+                  <span>Founded {company.foundedYear}</span>
+                )}
                 {company.visa && (
                   <Badge className="bg-[#3A6B4C]/10 text-[#3A6B4C] hover:bg-[#3A6B4C]/20 gap-1">
                     <CheckCircle className="w-4 h-4" />
