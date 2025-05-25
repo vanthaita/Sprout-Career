@@ -5,6 +5,7 @@ import "./globals.css";
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
+import PublicProvider from "@/provider/public.provider";
 const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin"],
@@ -35,7 +36,9 @@ export default async function RootLayout({
         className={`${nunito.variable} ${ptSans.variable} antialiased relative scroll-custom`} suppressHydrationWarning
       >
         <NextIntlClientProvider>
-          {children}
+          <PublicProvider>
+            {children}
+          </PublicProvider>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -83,7 +83,8 @@ const CandidateDashboard = () => {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-white border-b">
+      <div>Coming Soon</div>
+      {/* <header className="bg-white border-b">
         <div className=" flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <div 
@@ -229,7 +230,7 @@ const CandidateDashboard = () => {
             </Card>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

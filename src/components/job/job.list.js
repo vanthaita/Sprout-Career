@@ -1,78 +1,69 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import JobCard from './job.card';
 import Pagination from './pagination.job';
 
 const mockJobs = [
     {
-      title: 'Backend Engineer Leader',
-      company: 'Money Forward',
-      companyDesc: 'Top Japanese fintech ...',
-      tags: ['🇯🇵 Residents Only', '¥7.9M ~ ¥10M', 'Partial Remote'],
-      location: 'Tokyo',
-      salary: '¥ 7.9 ~ 10mil',
-      logoUrl: 'https://japan-dev.com/cdn/company_logos/moneyforward.png',
-      isNew: true,
-      url: '#',
-    },
-    {
-      title: 'Corporate Security Division Manager',
-      company: 'Money Forward',
-      companyDesc: 'Top Japanese fintech ...',
-      tags: ['Japanese Required', 'Apply from Abroad', '¥11M ~ ¥15M'],
-      location: 'Tokyo',
-      salary: '¥ 11 ~ 15mil',
-      logoUrl: 'https://japan-dev.com/cdn/company_logos/moneyforward.png',
-      isNew: true,
-      url: '#',
-    },
-    {
+      id: 1,
       title: 'Engineering Lead',
-      company: 'Timee',
-      tags: ['Japanese Required','🇯🇵 Residents Only', '¥7.8M ~ ¥14M'],
-      location: 'Tokyo / Remote',
-      salary: '¥ 7.8 ~ 14mil',
-      logoUrl: 'https://japan-dev.com/cdn/company_logos/timee.png',
-      isNew: true,
-      url: '#',
+      company: 'TechCorp',
+      description: 'Lead our engineering team...',
+      requirements: '5+ years experience...',
+      location: 'San Francisco, CA',
+      salaryMin: '120000',
+      salaryMax: '160000',
+      salaryCurrency: 'USD',
+      salaryPeriod: 'YEAR',
+      jobType: 'FULL_TIME',
+      status: 'APPROVED',
+      logoUrl: 'https://example.com/techcorp-logo.png',
+      postedDate: new Date(),
+      tags: ['Full-time', 'On-site', '$120k - $160k']
     },
     {
-        title: 'Technical Product Manager',
-        company: 'Timee',
-        tags: ['Japanese Required', '🇯🇵 Residents Only', '¥7.8M ~ ¥14M'],
-        location: 'Tokyo / Remote',
-        salary: '¥ 7.8 ~ 14mil',
-        logoUrl: 'https://japan-dev.com/cdn/company_logos/timee.png',
-        isNew: true,
-        url: '#',
-      },
-     {
-        title: 'Senior Front-end Engineer',
-        company: 'Rakuten',
-        companyDesc: 'Japan E-commerce leader',
-        tags: ['Apply from Abroad', '¥6M ~ ¥9M', 'Partial Remote'],
-        location: 'Tokyo',
-        salary: '¥ 6 ~ 9mil',
-        logoUrl: 'https://japan-dev.com/cdn/company_logos/rakuten.png',
-        isNew: true,
-        url: '#',
-      },
-      {
-        title: 'Senior Data Engineer',
-        company: 'Rakuten',
-        companyDesc: 'Japan E-commerce leader',
-        tags: ['Apply from Abroad', '¥6M ~ ¥9M', 'Partial Remote'],
-        location: 'Tokyo',
-        salary: '¥ 6 ~ 9mil',
-        logoUrl: 'https://japan-dev.com/cdn/company_logos/rakuten.png',
-        isNew: true,
-        url: '#',
-      },
+      id: 2,
+      title: 'Senior Frontend Developer',
+      company: 'WebSolutions',
+      description: 'Build amazing user interfaces...',
+      requirements: '3+ years React experience...',
+      location: 'Remote',
+      salaryMin: '70',
+      salaryMax: '90',
+      salaryCurrency: 'USD',
+      salaryPeriod: 'HOUR',
+      jobType: 'CONTRACT',
+      status: 'APPROVED',
+      logoUrl: 'https://example.com/websolutions-logo.png',
+      postedDate: new Date(),
+      tags: ['Remote', 'Contract', '$70 - $90/hr']
+    },
+    {
+      id: 3,
+      title: 'DevOps Engineer',
+      company: 'CloudSystems',
+      description: 'Manage our cloud infrastructure...',
+      requirements: 'AWS/GCP experience...',
+      location: 'New York, NY',
+      salaryMin: '130000',
+      salaryMax: '170000',
+      salaryCurrency: 'USD',
+      salaryPeriod: 'YEAR',
+      jobType: 'FULL_TIME',
+      status: 'APPROVED',
+      logoUrl: 'https://example.com/cloudsystems-logo.png',
+      postedDate: new Date(),
+      tags: ['Full-time', 'Hybrid', '$130k - $170k']
+    },
+    
 ];
 
 const JobList = () => {
-  const jobCount = 500;
-  const updatedDate = 'April 1, 2025';
+  const jobCount = mockJobs.length;
+  const updatedDate = new Date().toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
 
   return (
     <main>
@@ -80,9 +71,9 @@ const JobList = () => {
         {jobCount} open jobs・Updated {updatedDate}
       </p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {mockJobs.map((job, index) => (
-          <JobCard key={`${job.title}-${index}`} job={job} /> 
+      <div className="grid grid-cols-1 gap-4">
+        {mockJobs.map((job) => (
+          <JobCard key={job.id} job={job} /> 
         ))}
       </div>
 

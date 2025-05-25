@@ -4,12 +4,14 @@ import Logo from "./logo";
 import { Bell, Globe, Building2, Menu, X, User2Icon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "@/hook/useLanguage ";
-
 
 const Navbar = () => {
     const { t, language, handleLanguageChange } = useLanguage("navbar");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const pathname = usePathname();
+    
     const navlinks = [
         { labelKey: "findJobs", href: `/${language}/jobs` },
         { labelKey: "companies", href: `/${language}/companies` },
@@ -17,6 +19,12 @@ const Navbar = () => {
         { labelKey: "blog", href: `/${language}/blog` },
     ];
     
+    const isActive = (href) => {
+        return pathname === href || 
+               pathname.startsWith(`${href}/`) || 
+               (href === `/${language}/guide` && pathname.includes('guide'));
+    };
+
     return (
         <nav className="top-0 z-50 md:relative">
             <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -27,7 +35,11 @@ const Navbar = () => {
                             <Link
                                 key={link.labelKey}
                                 href={`${link.href}`}
-                                className="text-sm font-medium text-gray-700 hover:text-[#3A6B4C] transition-colors"
+                                className={`text-sm font-medium transition-colors ${
+                                    isActive(link.href) 
+                                        ? "text-[#3A6B4C]" 
+                                        : "text-gray-700 hover:text-[#3A6B4C]"
+                                }`}
                             >
                                 {t(link.labelKey)}
                             </Link>
@@ -87,7 +99,6 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
             {isMenuOpen && (
                 <div className="md:hidden absolute top-16 w-full bg-white border-t border-[#e4d9c8] shadow-lg z-50 ">
                     <div className="px-4 py-2">
@@ -95,7 +106,11 @@ const Navbar = () => {
                             <Link
                                 key={link.labelKey}
                                 href={link.href}
-                                className="block py-3 px-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                                className={`block py-3 px-2 text-sm rounded-md ${
+                                    isActive(link.href)
+                                        ? "text-blue-600 bg-blue-50"
+                                        : "text-gray-700 hover:bg-gray-100"
+                                }`}
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 {t(link.labelKey)}
@@ -117,8 +132,7 @@ const Navbar = () => {
                             onClick={() => setIsMenuOpen(false)}
                         >
                             <Building2 className="h-4 w-4" />
-                            {/* {t("employers")} */}
-                            Emloyer
+                            Employer
                         </Button>
                         
                         <div className="mt-2 pt-2 border-t border-[#e4d9c8]">
