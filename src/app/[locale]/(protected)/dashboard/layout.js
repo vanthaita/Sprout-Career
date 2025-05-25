@@ -6,7 +6,7 @@ const DashBoardLayout = ({ children }) => {
   return (
    <ProfileProvider>
       <div className='antialiased relative scroll-custom'>
-        {children}
+          {children}
         <ToastContainer />
       </div>
    </ProfileProvider>

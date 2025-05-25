@@ -32,7 +32,8 @@ const DashboardEmployee = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b">
+      <div>Coming Soon</div>
+      {/* <header className="bg-white border-b">
         <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <div 
@@ -229,7 +230,7 @@ const DashboardEmployee = () => {
             </div>
           </CardFooter>
         </Card>
-      </main>
+      </main> */}
     </div>
   )
 }

@@ -29,26 +29,26 @@ const SidebarEmployee = () => {
       title: 'Recruitment',
       items: [
         { name: 'Dashboard', icon: <FiHome size={18} />, pathSegment: '/dashboard/employer' },
-        { name: 'Messages', icon: <FiMail size={18} />, pathSegment: '/dashboard/employer/messages', badge: 3 },
-        { name: 'Calendar', icon: <FiCalendar size={18} />, pathSegment: '/dashboard/employer/calendar' },
+        // { name: 'Messages', icon: <FiMail size={18} />, pathSegment: '/dashboard/employer/messages', badge: 3 },
+        // { name: 'Calendar', icon: <FiCalendar size={18} />, pathSegment: '/dashboard/employer/calendar' },
         { name: 'Job Postings', icon: <FiBriefcase size={18} />, pathSegment: '/dashboard/employer/job-posting' },
-        { name: 'Candidates', icon: <FiUsers size={18} />, pathSegment: '/dashboard/employer/candidates' },
+        // { name: 'Candidates', icon: <FiUsers size={18} />, pathSegment: '/dashboard/employer/candidates' },
       ],
     },
     {
       title: 'Management',
       items: [
         { name: 'Interviews', icon: <FiCalendar size={18} />, pathSegment: '/dashboard/employer/interviews', badge: 5 },
-        { name: 'Talent Pool', icon: <FiDatabase size={18} />, pathSegment: '/dashboard/employer/talent-pool' },
-        { name: 'Offer Management', icon: <FiAward size={18} />, pathSegment: '/dashboard/employer/offer-management' },
+        // { name: 'Talent Pool', icon: <FiDatabase size={18} />, pathSegment: '/dashboard/employer/talent-pool' },
+        // { name: 'Offer Management', icon: <FiAward size={18} />, pathSegment: '/dashboard/employer/offer-management' },
       ],
     },
     {
       title: 'Other',
       items: [
-        { name: 'Onboarding', icon: <FiLayers size={18} />, pathSegment: '/dashboard/employer/onboarding' },
-        { name: 'Notifications', icon: <FiBell size={18} />, pathSegment: '/dashboard/employer/notifications', badge: 2 },
-        { name: 'Settings', icon: <FiSettings size={18} />, pathSegment: '/dashboard/employer/settings' },
+        // { name: 'Onboarding', icon: <FiLayers size={18} />, pathSegment: '/dashboard/employer/onboarding' },
+        // { name: 'Notifications', icon: <FiBell size={18} />, pathSegment: '/dashboard/employer/notifications', badge: 2 },
+        // { name: 'Settings', icon: <FiSettings size={18} />, pathSegment: '/dashboard/employer/settings' },
       ],
     },
   ];

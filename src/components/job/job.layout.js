@@ -1,8 +1,6 @@
 import React from 'react';
 import JobFilters from './job.filters';
 import JobList from './job.list';
-import Options from '../options';
-
 
 const JobsPageLayout = () => {
   return (
