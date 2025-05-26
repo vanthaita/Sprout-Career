@@ -23,6 +23,7 @@ const OnboardingPage = () => {
   const [userType, setUserType] = useState('candidate')
   const [dateOfBirth, setDateOfBirth] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [isLoading, setIsLoading] = useState(true) 
   const [candidateData, setCandidateData] = useState({
     fullName: '',
     gender: '',
@@ -38,54 +39,71 @@ const OnboardingPage = () => {
 
   const [employerData, setEmployerData] = useState({
     companyName: '',
-    companyDescription: '',
+    CompanyDesc: '',
     companyLogo: null,
-    website: '',
+    CompanyUrl: '',
     industry: '',
     companySize: '',
-    foundedYear: ''
+    foundedYear: '',
+    address: '',
   })
   
-  // useEffect(() => {
-  //   const checkIsOnboarded = async () => {
-  //     try {
-  //       setLoading(true)
-  //       const { data: res } = await axiosInstance.get('/users/check-isOnboarded');
-  //       const { isOnboarded, userType } = res.data;
-  //       if (isOnboarded) {
-  //         router.push(`/dashboard/${userType.toLowerCase()}`);
-  //       }
-  //     } catch (error) {
-  //       console.error('Failed to check onboarding status', error);
-  //     } finally {
-  //       setLoading(false)
-  //     }
-  //   };
+   useEffect(() => {
+    const checkIsOnboarded = async () => {
+      try {
+        setIsLoading(true)
+        const { data: res } = await axiosInstance.get('/users/check-isOnboarded');
+        const { isOnboarded, userType } = res.data;
+        if (isOnboarded) {
+          return router.push(`/dashboard/${userType.toLowerCase()}`);
+        }
+      } catch (error) {
+        console.error('Failed to check onboarding status', error);
+      } finally {
+        setIsLoading(false)
+      }
+    };
     
-  //   checkIsOnboarded();
-  // }, [router]);
+    checkIsOnboarded();
+  }, [router]);
 
-  const handleCandidateSubmit = async (e) => {
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+
+   const handleCandidateSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true)
+    setSubmitting(true);
     const dateOfBirthISO = new Date(dateOfBirth);
-    
-    if (isNaN(dateOfBirthISO.getTime())) { 
+    if (isNaN(dateOfBirthISO.getTime())) {
       console.error("Invalid date format:", dateOfBirth);
-      setSubmitting(false)
+      setSubmitting(false);
       return;
     }
   
     try {
-      const profileResponse = await axiosInstance.post('/candidate/profile', {
-        fullName: candidateData.fullName,
-        gender: candidateData.gender,
-        address: candidateData.address,
-        phoneNumber: candidateData.phoneNumber,
-        profilePhotoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_gaxAkYYDw8UfNleSC2Viswv3xSmOa4bIAQ&s",
-        motivation: candidateData.motivation,
-        skills: candidateData.skills,
-        dateOfBirth: dateOfBirthISO.toISOString()
+      const profileFormData = new FormData();
+      profileFormData.append('fullName', candidateData.fullName);
+      profileFormData.append('gender', candidateData.gender);
+      profileFormData.append('address', candidateData.address);
+      profileFormData.append('phoneNumber', candidateData.phoneNumber);
+      profileFormData.append('motivation', candidateData.motivation);
+      profileFormData.append('skills', candidateData.skills);
+      profileFormData.append('dateOfBirth', dateOfBirthISO.toISOString());
+      
+      if (candidateData.profilePhoto) {
+        profileFormData.append('profilePhoto', candidateData.profilePhoto); 
+      }
+
+      await axiosInstance.post('/candidate/profile', profileFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', 
+        },
       });
   
       if (candidateData.education.length > 0) {
@@ -112,38 +130,69 @@ const OnboardingPage = () => {
         });
       }
   
-      await axiosInstance.patch('/users/update-onboarding');
       router.push('/dashboard/candidate');
     } catch (error) {
       console.error('Error during profile submission:', error);
+
     } finally {
-      setSubmitting(false)
+      setSubmitting(false);
     }
   };
 
 
   const handleEmployerSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true)
+    setSubmitting(true);
+    
     try {
-      await axiosInstance.post('/employer', {
-        companyName: employerData.companyName,
-        companyLogoUrl:  '',
-        companySize: employerData.companySize,
-        industry: employerData.industry,
-        foundedYear: employerData.foundedYear, 
-        CompanyUrl: employerData.website,      
-        CompanyDesc: employerData.companyDescription,
+      const formData = new FormData();
+      
+      formData.append('companyName', employerData.companyName);
+      formData.append('companySize', employerData.companySize);
+      formData.append('industry', employerData.industry);
+      formData.append('foundedYear', employerData.foundedYear);
+      formData.append('CompanyUrl', employerData.CompanyUrl);
+      formData.append('CompanyDesc', employerData.CompanyDesc);
+      formData.append('address', employerData.address);
+      if (employerData.companyLogo) {
+        formData.append('companyLogo', employerData.companyLogo);
+      }
+
+      await axiosInstance.post('/employer', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
       
-      router.push('/dashboard/employee');
+      router.push('/dashboard/employer');
     } catch(error) {
       console.error('Error during profile submission:', error);
     } finally {
-      setSubmitting(false)
+      setSubmitting(false);
     }
-  }
-  
+  };
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    console.log(file);
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    if (!validTypes.includes(file.type)) {
+      alert('Please upload a valid image file (JPEG, PNG)');
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      alert('File size must be less than 5MB');
+      return;
+    }
+    console.log(file);
+    if (userType === 'candidate') {
+      setCandidateData({ ...candidateData, profilePhoto: file });
+    } else {
+      setEmployerData({ ...employerData, companyLogo: file });
+    }
+  };
   // if (loading) {
   //   return (
   //     <div className="flex items-center justify-center min-h-screen">
@@ -164,15 +213,6 @@ const OnboardingPage = () => {
       ...employerData,
       [e.target.name]: e.target.value
     })
-  }
-
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0]
-    if (userType === 'candidate') {
-      setCandidateData({ ...candidateData, profilePhoto: file })
-    } else {
-      setEmployerData({ ...employerData, companyLogo: file })
-    }
   }
 
   const addEducationField = () => {
@@ -799,31 +839,44 @@ const OnboardingPage = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="website" className="font-medium text-gray-700 flex items-center gap-2">
+                      <Label htmlFor="CompanyUrl" className="font-medium text-gray-700 flex items-center gap-2">
                         <Globe className="h-5 w-5" />
                         Company Website
                       </Label>
                       <Input
-                        id="website"
-                        name="website"
+                        id="CompanyUrl"
+                        name="CompanyUrl"
                         type="url"
-                        value={employerData.website}
+                        value={employerData.CompanyUrl}
                         onChange={handleEmployerChange}
                         className="focus-visible:ring-2 focus-visible:ring-primary h-12"
                         placeholder="https://yourcompany.com"
                       />
                     </div>
                   </div>
-
                   <div className="space-y-2">
-                    <Label htmlFor="companyDescription" className="font-medium text-gray-700 flex items-center gap-2">
+                    <Label htmlFor="address" className="font-medium text-gray-700 flex items-center gap-2">
+                      <MapPin className="h-4 w-4" />
+                      Address
+                    </Label>
+                    <Input
+                      id="address"
+                      name="address"
+                      value={employerData.address}
+                      onChange={handleEmployerChange}
+                      className="focus-visible:ring-2 focus-visible:ring-primary h-12"
+                      placeholder="123 Main St, City, Country"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="CompanyDesc" className="font-medium text-gray-700 flex items-center gap-2">
                       <FileText className="h-5 w-5" />
                       Company Description *
                     </Label>
                     <Textarea
-                      id="companyDescription"
-                      name="companyDescription"
-                      value={employerData.companyDescription}
+                      id="CompanyDesc"
+                      name="CompanyDesc"
+                      value={employerData.CompanyDesc}
                       onChange={handleEmployerChange}
                       rows={4}
                       className="focus-visible:ring-2 focus-visible:ring-primary min-h-[120px]"
