@@ -37,7 +37,6 @@ const CandidateProfilePage = () => {
       try {
         const response = await axiosInstance.get('/candidate/profile');
         setCandidate(response.data.data);
-        // Mock files data - replace with actual API call
         setFiles([
           { id: 1, name: 'Resume.pdf', type: 'resume', date: '2023-05-15', size: '2.4 MB' },
           { id: 2, name: 'Cover_Letter.pdf', type: 'cover', date: '2023-05-10', size: '1.2 MB' },
@@ -360,7 +359,7 @@ const CandidateProfilePage = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                <p className="text-gray-700 leading-relaxed whitespace-pre-line break-words">
                   {candidate.motivation || 'No about information provided. Add a summary about yourself, your skills, and experience.'}
                 </p>
               </CardContent>

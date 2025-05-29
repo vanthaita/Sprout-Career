@@ -11,7 +11,6 @@ const CandidateInterviewPage = () => {
   const [showPrepModal, setShowPrepModal] = useState(false)
   const [selectedInterview, setSelectedInterview] = useState(null)
 
-  // Mock interview data
   const interviews = {
     upcoming: [
       {

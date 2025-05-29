@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useUserProfile } from '@/context/useUserProfile';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react'; // No need for useState if selection is path-based
+import React from 'react'; 
 import {
   FiHome,
   FiMail,
@@ -53,12 +53,12 @@ const SidebarEmployee = () => {
     },
   ];
 
-  const match = pathname.match(/^\/([a-z]{2,})(\/.*)?$/); 
-  const currentLocale = match ? match[1] : ''; 
+  const match = pathname.match(/^\/(?!dashboard($|\/))([a-z]{2,})(\/.*)?$/);
+  const currentLocale = match ? match[2] : ''; 
 
   const pathWithoutLocale = currentLocale && pathname.startsWith(`/${currentLocale}`)
     ? pathname.substring(`/${currentLocale}`.length)
-    : pathname; 
+    : pathname;
   return (
     <div className="w-64 border-r border-gray-900 h-full fixed left-0 top-0 flex flex-col">
       <div className="flex items-center p-6 border-b border-gray-100 h-20">
@@ -77,7 +77,10 @@ const SidebarEmployee = () => {
 
               <ul>
                 {section.items.map((item, itemIndex) => {
-                  const isActive = pathWithoutLocale === item.pathSegment;
+                  const isActive = 
+                    pathWithoutLocale === item.pathSegment || 
+                    (item.name === 'Job Postings' && pathWithoutLocale.startsWith('/dashboard/employer/job-posting'));
+
 
                   const href = currentLocale ? `/${currentLocale}${item.pathSegment}` : item.pathSegment;
 

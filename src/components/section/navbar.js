@@ -56,21 +56,26 @@ const Navbar = () => {
                         </Button>
                         
                         <div className="hidden md:flex items-center gap-4">
-                            <Button
-                                variant="ghost"
-                                className="text-gray-700 hover:bg-[#3A6B4C]/10 gap-2"
-                            >
-                                <User2Icon className="h-4 w-4" />
-                                {t("candidates")}
-                            </Button>
-                            <div className="border-l border-[#e4d9c8] pl-4">
+                            <Link href={`/${language}/signin`}>
                                 <Button
                                     variant="ghost"
-                                    className="text-gray-700 hover:bg-[#3A6B4C]/10 gap-2 "
+                                    className="text-gray-700 hover:bg-[#3A6B4C]/10 gap-2"
                                 >
-                                    <Building2 className="h-4 w-4" />
-                                    {t("employers")}
+                                    <User2Icon className="h-4 w-4" />
+                                    {t("candidates")}
                                 </Button>
+                            </Link>
+                        
+                            <div className="border-l border-[#e4d9c8] pl-4">
+                               <Link href={`/${language}/signin`}>
+                                    <Button
+                                        variant="ghost"
+                                        className="text-gray-700 hover:bg-[#3A6B4C]/10 gap-2 "
+                                    >
+                                        <Building2 className="h-4 w-4" />
+                                        {t("employers")}
+                                    </Button>
+                               </Link>
                             </div>
                             <div className="flex items-center border-l border-[#e4d9c8] pl-4">
                                 <Button
@@ -116,24 +121,27 @@ const Navbar = () => {
                                 {t(link.labelKey)}
                             </Link>
                         ))}
-                        
-                        <Button
-                            variant="ghost"
-                            className="w-full justify-start text-gray-700 hover:bg-gray-100 gap-2 py-3 px-2"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            <Building2 className="h-4 w-4" />
-                            {t("employers")}
-                        </Button>
-
-                        <Button
-                            variant="ghost"
-                            className="w-full justify-start text-gray-700 hover:bg-gray-100 gap-2 py-3 px-2"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            <Building2 className="h-4 w-4" />
-                            Employer
-                        </Button>
+                        <Link href={`/${language}/signin`}>
+                            <Button
+                                variant="ghost"
+                                className="w-full justify-start text-gray-700 hover:bg-gray-100 gap-2 py-3 px-2"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <Building2 className="h-4 w-4" />
+                                {t("employers")}
+                            </Button>
+                        </Link>
+                       
+                        <Link >
+                            <Button
+                                variant="ghost"
+                                className="w-full justify-start text-gray-700 hover:bg-gray-100 gap-2 py-3 px-2"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <Building2 className="h-4 w-4" />
+                                Employer
+                            </Button>
+                        </Link>
                         
                         <div className="mt-2 pt-2 border-t border-[#e4d9c8]">
                             <Button
