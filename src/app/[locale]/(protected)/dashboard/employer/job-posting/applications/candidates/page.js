@@ -49,7 +49,7 @@ const CandidateProfilePage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosInstance.get('/candidate/view-profile', {
+                const response = await axiosInstance.get('/candidate/profile', {
                     params: { email: decodedEmail },
                 });
                 setCandidate(response.data.data);

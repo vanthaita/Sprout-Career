@@ -54,6 +54,7 @@ const OnboardingPage = () => {
         setIsLoading(true)
         const { data: res } = await axiosInstance.get('/users/check-isOnboarded');
         const { isOnboarded, userType } = res.data;
+        console.log(res);
         if (isOnboarded) {
           return router.push(`/dashboard/${userType.toLowerCase()}`);
         }

@@ -21,7 +21,6 @@ export const StageProgressBar = ({
     return null;
   }
 
-  // Ensure currentStageIndex is within bounds
   const safeCurrentStageIndex = Math.min(Math.max(currentStageIndex, 0), stages.length - 1);
 
   return (
