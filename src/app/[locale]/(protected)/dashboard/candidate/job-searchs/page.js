@@ -11,6 +11,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import axiosInstance from '@/axios/axiosIntance';
 import { toast } from 'react-toastify';
 import { useUserProfile } from '@/context/useUserProfile';
+import Markdown from 'react-markdown';
 
 const JobSearchPage = () => {
   const primaryColor = '#3A6B4C';
@@ -114,9 +115,24 @@ const JobSearchPage = () => {
   };
 
   const formatSalary = (job) => {
-    if (job.salaryMin && job.salaryMax) {
-      return `${job.salaryCurrency}${job.salaryMin} - ${job.salaryCurrency}${job.salaryMax} per ${job.salaryPeriod.toLowerCase()}`;
+    const formatNumber = (num) => {
+      if(!num) return '';
+      const number = typeof nun === 'string' ? parseFloat(num) : num;
+      if(number > 1000) {
+        return `${(number / 10000).toFixed(0)}K`
+      } 
+      return number.toLocaleString();
     }
+    
+    if(job.salaryMin && job.salaryMax) {
+      const formattedMin = formatNumber(job.salaryMin);
+      const formattedMax = formatNumber(job.salaryMax);
+      const period = job.salaryPeriod  ? job.salaryPeriod.toLowerCase() : 'year';
+
+      return `${formattedMin} - ${formattedMax} ${job.salaryCurrency} per ${period}`;
+
+    }
+  
     return job.salaryRange || 'Salary not specified';
   };
 
@@ -246,6 +262,7 @@ const JobSearchPage = () => {
         {selectedJob ? (
           <div className="bg-white rounded-lg border p-6">
             <div className="flex justify-between items-start mb-6">
+
               <div>
                 <h2 className="text-2xl font-bold mb-2">{selectedJob.title}</h2>
                 <div className="flex items-center gap-4">
@@ -287,7 +304,9 @@ const JobSearchPage = () => {
             <div className="mb-8">
               <h3 className="text-xl font-semibold mb-4">Job Description</h3>
               <div className="prose max-w-none">
-                {selectedJob.description}
+                <Markdown>
+                  {selectedJob.description}
+                </Markdown>
               </div>
             </div>
 
@@ -295,7 +314,9 @@ const JobSearchPage = () => {
               <div className="mb-8">
                 <h3 className="text-xl font-semibold mb-4">Requirements</h3>
                 <div className="prose max-w-none">
-                  {selectedJob.requirements}
+                  <Markdown>
+                    {selectedJob.requirements}
+                  </Markdown>
                 </div>
               </div>
             )}
@@ -397,7 +418,16 @@ const JobSearchPage = () => {
                       </Badge>
                     </div>
                     
-                    <p className="text-gray-600 mb-4 line-clamp-2">{job.description.substring(0, 150)}...</p>
+                  <div className="text-gray-600 mb-4 line-clamp-2">
+                    {job.description
+                      .replace(/#{1,6}\s?/g, '')
+                      .replace(/\*\*/g, '') 
+                      .replace(/\*/g, '')
+                      .replace(/`/g, '')
+                      .replace(/\[(.*?)\]\(.*?\)/g, '$1') 
+                      .replace(/\n/g, ' ') 
+                      .substring(0, 150)}...
+                  </div>
                     
                     {job.tags && (
                       <div className="mb-4">
