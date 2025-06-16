@@ -3,6 +3,8 @@ import React from 'react'
 import { Sprout, BookOpen, Download, Mail, ArrowRight, ArrowLeft, HelpCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import Breadcrumb from '@/components/ui/Breadcrumb'
+import BackToHome from '@/components/ui/BackToHome'
 
 const GuidePage = () => {
   const featuredGuides = [
@@ -48,49 +50,13 @@ const GuidePage = () => {
 
   return (
     <div className="min-h-screen">
-
-
       <div className="max-w-6xl mx-auto px-4 pt-6 sm:px-6 lg:px-8">
-        <nav aria-label="Breadcrumb" className="text-lg">
-          <ol className="inline-flex items-center space-x-2">
-            <li>
-              <Link
-                href="/"
-                className="
-            px-3 py-1 
-            text-base font-medium 
-            text-[#3A6B4C] 
-            bg-white 
-            border border-[#3A6B4C] 
-            rounded-full 
-            hover:bg-[#3A6B4C] hover:text-white 
-            transition-colors
-          "
-              >
-                Home
-              </Link>
-            </li>
-
-            <li>
-              <span className="text-gray-400">/</span>
-            </li>
-
-            <li>
-              <span
-                className="
-            px-3 py-1 
-            text-base font-medium 
-            text-gray-700 
-            bg-gray-100 
-            border border-gray-200 
-            rounded-full
-          "
-              >
-                Career Guide
-              </span>
-            </li>
-          </ol>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Career Guide' }
+          ]}
+        />
       </div>
 
       <section className="pt-20 pb-16 px-4">
@@ -215,18 +181,8 @@ const GuidePage = () => {
         </div>
       </section>
 
-      {/* Back to Home Button - Đã chỉnh sửa */}
-      <div className="mt-6 flex justify-center pb-12">
-        <Button
-          asChild
-          variant="outline"
-          className="group border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#3A6B4C]/10 h-11 px-5 text-base"
-        >
-          <Link href="/" className="flex items-center">
-            <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Back to Home
-          </Link>
-        </Button>
+      <div className="mt-12 flex justify-center pb-16">
+        <BackToHome />
       </div>
     </div>
   )

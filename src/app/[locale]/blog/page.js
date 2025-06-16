@@ -5,54 +5,56 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { ArrowRight, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import Breadcrumb from '@/components/ui/Breadcrumb'
+import BackToHome from '@/components/ui/BackToHome'
 
 const mockArticleData = [
   {
-    title: 'Moving to Japan as a Software Developer: An Opinionated FAQ',
+    title: "Moving to Japan as a Software Developer: An Opinionated FAQ",
     description:
-      'Want to move to Japan and get a job as software developer? Have questions? I have answers. This i...',
-    imageUrl: '/images/blog/fes.jpg',
-    altText: 'Tokyo skyline with cherry blossoms',
-    url: '#',
+      "Want to move to Japan and get a job as software developer? Have questions? I have answers. This i...",
+    imageUrl: "/images/blog/fes.jpg",
+    altText: "Tokyo skyline with cherry blossoms",
+    url: "#",
   },
   {
-    title: 'Software Developer Salaries in Japan: The Ultimate Guide [Updated 2024]',
+    title: "Software Developer Salaries in Japan: The Ultimate Guide [Updated 2024]",
     description:
-      'Updated for 2024! Featuring hard data from 100+ tech companies in Japan, this guide will teach you ...',
-    imageUrl: '/images/blog/bike.jpg',
-    altText: 'Maneki-neko lucky cat statue',
-    url: '#',
+      "Updated for 2024! Featuring hard data from 100+ tech companies in Japan, this guide will teach you ...",
+    imageUrl: "/images/blog/bike.jpg",
+    altText: "Maneki-neko lucky cat statue",
+    url: "#",
   },
   {
-    title: 'How to find a job as a software developer in Japan',
+    title: "How to find a job as a software developer in Japan",
     description:
-      'Finding a software developer job in Japan is tough. Here’s some advice to help English speakers avo...',
-    imageUrl: '/images/blog/ele.jpg',
-    altText: 'Three developers collaborating around a laptop',
-    url: '#',
+      "Finding a software developer job in Japan is tough. Here's some advice to help English speakers avo...",
+    imageUrl: "/images/blog/ele.jpg",
+    altText: "Three developers collaborating around a laptop",
+    url: "#",
   },
   {
-    title: 'How to get a visa as an engineer in Japan',
+    title: "How to get a visa as an engineer in Japan",
     description:
-      'Want to work in Japan but unsure what visa to get? Or even if you’re eligible for one? This ...',
-    imageUrl: '/images/blog/ghibli_04.webp',
-    altText: 'Close-up of a Japan visa document',
-    url: '#',
+      "Want to work in Japan but unsure what visa to get? Or even if you're eligible for one? This ...",
+    imageUrl: "/images/blog/ghibli_04.webp",
+    altText: "Close-up of a Japan visa document",
+    url: "#",
   },
   {
-    title: 'How to write a perfect developer resume in Japan [2025 guide + template]',
-    description: 'We wrote the most comprehensive guide on how to write...',
-    imageUrl: '/images/blog/ghibli_12.webp',
-    altText: 'Laptop showing a resume next to a Japanese emblem',
-    url: '#',
+    title: "How to write a perfect developer resume in Japan [2025 guide + template]",
+    description: "We wrote the most comprehensive guide on how to write...",
+    imageUrl: "/images/blog/ghibli_12.webp",
+    altText: "Laptop showing a resume next to a Japanese emblem",
+    url: "#",
   },
   {
-    title: 'Best Tech Meetups in Tokyo',
+    title: "Best Tech Meetups in Tokyo",
     description:
-      'We went through and checked the status of Tokyo’s top meetups to see where the opportunities are,...',
-    imageUrl: '/images/blog/ghibli_14.webp',
-    altText: 'Overhead view of a crowded tech meetup',
-    url: '#',
+      "We went through and checked the status of Tokyo's top meetups to see where the opportunities are,...",
+    imageUrl: "/images/blog/ghibli_14.webp",
+    altText: "Overhead view of a crowded tech meetup",
+    url: "#",
   },
 ];
 
@@ -77,52 +79,15 @@ const BlogPage = () => {
   const activeFilter = 'all';
 
   return (
-
     <div className="min-h-screen">
-
       <div className="max-w-6xl mx-auto px-4 pt-6 sm:px-6 lg:px-8">
-        <nav aria-label="Breadcrumb" className="text-lg">
-          <ol className="inline-flex items-center space-x-2">
-            <li>
-              <Link
-                href="/"
-                className="
-            px-3 py-1 
-            text-base font-medium 
-            text-[#3A6B4C] 
-            bg-white 
-            border border-[#3A6B4C] 
-            rounded-full 
-            hover:bg-[#3A6B4C] hover:text-white 
-            transition-colors
-          "
-              >
-                Home
-              </Link>
-            </li>
-
-            <li>
-              <span className="text-gray-400">/</span>
-            </li>
-
-            <li>
-              <span
-                className="
-            px-3 py-1 
-            text-base font-medium 
-            text-gray-700 
-            bg-gray-100 
-            border border-gray-200 
-            rounded-full
-          "
-              >
-                Blog
-              </span>
-            </li>
-          </ol>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Blog' }
+          ]}
+        />
       </div>
-
 
       <div className="pt-12 pb-16 px-4 text-center">
         <div className="max-w-3xl mx-auto">
@@ -146,7 +111,7 @@ const BlogPage = () => {
                     : 'hover:text-gray-800'
                   }
                 `}
-              // onClick={() => setActiveFilter(tag.value)} 
+                // onClick={() => setActiveFilter(tag.value)} 
               >
                 {tag.label}
               </Button>
@@ -216,18 +181,8 @@ const BlogPage = () => {
           <div className="mt-16 pt-8 border-t border-[#3A6B4C]">
             <Pagination />
           </div>
-          {/* Thêm Back to Home button ở đây */}
-          <div className="mt-8 flex justify-center pb-12">
-            <Button
-              asChild
-              variant="outline"
-              className="group border-[#3A6B4C] text-[#3A6B4C] hover:bg-[#3A6B4C]/10" // Thêm class hover ở đây
-            >
-              <Link href="/" className="flex items-center">
-                <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                Back to Home
-              </Link>
-            </Button>
+          <div className="mt-12 flex justify-center pb-16">
+            <BackToHome />
           </div>
 
         </div>

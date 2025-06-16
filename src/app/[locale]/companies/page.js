@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 import Pagination from '@/components/job/pagination.job'
+import Breadcrumb from '@/components/ui/Breadcrumb'
+import BackToHome from '@/components/ui/BackToHome'
 
 const CompaniesPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -51,19 +53,27 @@ const CompaniesPage = () => {
   const filteredCompanies = mockCompanies.filter(company => {
     const matchesSearch = company.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       company.companyDesc.toLowerCase().includes(searchTerm.toLowerCase())
-    
+
     const matchesFilters = (
       (!filters.location || company.address.includes(filters.location)) &&
       (!filters.companySize || company.companySize === filters.companySize) &&
       (!filters.industry || company.industry === filters.industry) &&
       (!filters.visaSponsorship || company.visa)
     )
-    
+
     return matchesSearch && matchesFilters
   })
 
   return (
     <div className="min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 pt-6 sm:px-6 lg:px-8">
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Companies' }
+          ]}
+        />
+      </div>
       <section className="pt-20 pb-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
@@ -72,7 +82,7 @@ const CompaniesPage = () => {
               Discover Tech Companies in Japan
             </h1>
           </div>
-          
+
           <div className="flex flex-col md:flex-row justify-center gap-8 text-[#554640]/90 mb-8">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-6 h-6 text-[#3A6B4C]" />
@@ -103,7 +113,7 @@ const CompaniesPage = () => {
           <div className="flex flex-wrap gap-4 items-center">
             <Select
               value={filters.location}
-              onValueChange={(value) => setFilters({...filters, location: value})}
+              onValueChange={(value) => setFilters({ ...filters, location: value })}
             >
               <SelectTrigger className="w-[180px] focus:ring-[#3A6B4C]">
                 <SelectValue placeholder="All Locations" />
@@ -118,7 +128,7 @@ const CompaniesPage = () => {
 
             <Select
               value={filters.companySize}
-              onValueChange={(value) => setFilters({...filters, companySize: value})}
+              onValueChange={(value) => setFilters({ ...filters, companySize: value })}
             >
               <SelectTrigger className="w-[180px] focus:ring-[#3A6B4C]">
                 <SelectValue placeholder="Company Size" />
@@ -134,7 +144,7 @@ const CompaniesPage = () => {
 
             <Select
               value={filters.industry}
-              onValueChange={(value) => setFilters({...filters, industry: value})}
+              onValueChange={(value) => setFilters({ ...filters, industry: value })}
             >
               <SelectTrigger className="w-[180px] focus:ring-[#3A6B4C]">
                 <SelectValue placeholder="Industry" />
@@ -152,7 +162,7 @@ const CompaniesPage = () => {
               <Checkbox
                 id="visaSponsorship"
                 checked={filters.visaSponsorship}
-                onCheckedChange={(checked) => setFilters({...filters, visaSponsorship: !!checked})}
+                onCheckedChange={(checked) => setFilters({ ...filters, visaSponsorship: !!checked })}
                 className="text-[#3A6B4C] border-[#2B463C]"
               />
               <label
@@ -187,8 +197,8 @@ const CompaniesPage = () => {
               className="p-6 hover:shadow-lg transition-all duration-300"
             >
               <div className="flex items-start gap-4 mb-4">
-                <img 
-                  src={company.companyLogoUrl} 
+                <img
+                  src={company.companyLogoUrl}
                   alt={company.companyName}
                   className="w-16 h-16 object-contain p-1.5"
                 />
@@ -199,9 +209,9 @@ const CompaniesPage = () => {
                     <span className="text-[#554640]/80">{company.address}</span>
                   </div>
                   {company.companyUrl && (
-                    <a 
-                      href={company.companyUrl} 
-                      target="_blank" 
+                    <a
+                      href={company.companyUrl}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-[#3A6B4C] hover:underline flex items-center gap-1"
                     >
@@ -211,9 +221,9 @@ const CompaniesPage = () => {
                   )}
                 </div>
               </div>
-              
+
               <p className="text-[#554640]/90 mb-4">{company.companyDesc}</p>
-              
+
               <div className="flex flex-wrap gap-2 mb-4">
                 {company.benefits.map((benefit, index) => (
                   <Badge
@@ -241,11 +251,15 @@ const CompaniesPage = () => {
             </Card>
           ))}
         </div>
-        
+
         <div className="mt-8">
           <Pagination className="justify-center" />
         </div>
       </section>
+
+      <div className="mt-12 flex justify-center pb-16">
+        <BackToHome />
+      </div>
     </div>
   )
 }
