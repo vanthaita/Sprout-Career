@@ -3,7 +3,7 @@ import React from 'react'
 import { Sprout, BookOpen, Download, Mail, ArrowRight, ArrowLeft, HelpCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import Breadcrumb from '@/components/ui/Breadcrumb'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import BackToHome from '@/components/ui/BackToHome'
 
 const GuidePage = () => {

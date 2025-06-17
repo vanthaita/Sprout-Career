@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { ArrowRight, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-import Breadcrumb from '@/components/ui/Breadcrumb'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import BackToHome from '@/components/ui/BackToHome'
 
 const mockArticleData = [
@@ -111,7 +111,7 @@ const BlogPage = () => {
                     : 'hover:text-gray-800'
                   }
                 `}
-                // onClick={() => setActiveFilter(tag.value)} 
+              // onClick={() => setActiveFilter(tag.value)} 
               >
                 {tag.label}
               </Button>
